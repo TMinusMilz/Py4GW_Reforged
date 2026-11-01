@@ -133,7 +133,10 @@ class NecromancerSkills:
         skill.SkillType = SkillType.Enchantment.value
         skill.TargetAllegiance = Skilltarget.OtherAlly.value
         skill.Nature = SkillNature.EnergyBuff.value
-        skill.Conditions.LessEnergy = 0.4
+        # HR Mesmerway: start BiP early enough to create a real energy buffer.
+        # ResolveAllyTarget still picks the lowest-energy eligible ally and the
+        # existing effect/whiteboard locks prevent redundant recasts.
+        skill.Conditions.LessEnergy = 0.75
         skill.Conditions.SacrificeHealth = 0.3
         # BiP sacrifices 33% of max HP. Require the caster to remain above 55% of max HP and
         # above 175 HP absolute after the sacrifice, so we never self-kill or drop to unsafe HP.

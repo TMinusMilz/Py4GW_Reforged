@@ -29,7 +29,7 @@ from Py4GWCoreLib.HeroAI.windows import (HeroAI_FloatingWindows ,HeroAI_Windows,
 from Py4GWCoreLib.HeroAI.ui_base import HeroAI_BaseUI
 from Py4GWCoreLib.HeroAI.ui import (draw_configure_window, draw_skip_cutscene_overlay)
 from Py4GWCoreLib.HeroAI import team_viewer_broadcast
-from Py4GWCoreLib import (GLOBAL_CACHE, Agent,
+from Py4GWCoreLib import (GLOBAL_CACHE, Agent, Party,
                           Range, Routines, ThrottledTimer, SharedCommandType)
 
 #region GLOBALS
@@ -87,6 +87,13 @@ def LootingNode(cached_data: CacheData)-> BehaviorTree.NodeState:
 
 
 #region Combat
+def _team_recovery_support_hold_active() -> bool:
+    try:
+        from Py4GWCoreLib.Builds.Skills import TeamRecovery
+        return bool(TeamRecovery.is_support_hold_active())
+    except Exception:
+        return False
+
 def HandleOutOfCombat(cached_data: CacheData):
     options = cached_data.account_options
     
@@ -97,7 +104,7 @@ def HandleOutOfCombat(cached_data: CacheData):
     if cached_data.data.in_aggro:
         return False
 
-    if is_follow_recovery_active(cached_data, follow_execution_state):
+    if is_follow_recovery_active(cached_data, follow_execution_state) and not _team_recovery_support_hold_active():
         heroai_build.ResetTickExecution()
         return False
 
@@ -116,7 +123,7 @@ def HandleCombat(cached_data: CacheData):
         heroai_build.ResetTickExecution()
         return False
 
-    if is_follow_recovery_active(cached_data, follow_execution_state):
+    if is_follow_recovery_active(cached_data, follow_execution_state) and not _team_recovery_support_hold_active():
         heroai_build.ResetTickExecution()
         return False
     
@@ -160,9 +167,22 @@ def EnsureFollowModuleIni() -> None:
     except Exception as e:
         PySystem.Console.Log(MODULE_NAME, f"Follow formation INI bootstrap failed: {e}", PySystem.Console.MessageType.Error)
 
+def _build_cast_window_active() -> bool:
+    # The active specialized build owns this timer, not the generic HeroAI
+    # fallback. Never resolve/replace a build merely for the follow check.
+    build = heroai_build.GetBuildContract()
+    if build is None:
+        build = heroai_build
+    check = getattr(build, "HasLocalCastPending", None)
+    return bool(check()) if callable(check) else False
+
+
 def Follow(cached_data: CacheData) -> BehaviorTree.NodeState:
     if not cached_data.data.is_leader:
-        return execute_follower_follow(cached_data, follow_execution_state)
+        return execute_follower_follow(
+            cached_data, follow_execution_state,
+            cast_pending=_build_cast_window_active,
+        )
     
     return BehaviorTree.NodeState.FAILURE  # leader doesn't follow anyone
 
@@ -387,6 +407,336 @@ HeroAI_BT = BehaviorTree.SequenceNode(name="HeroAI_Main_BT",
 )
 
 
+
+# ---------------------------------------------------------------------------
+# Keystone Mesmer Hero controller hook
+# ---------------------------------------------------------------------------
+# This is intentionally attached to HeroAI itself. HeroAI is already the
+# confirmed per-frame runtime on the hero-owning account, so Keystone no longer
+# depends on a second optional widget being discovered/enabled.
+_keystone_hero_hook_logged = False
+_keystone_hero_hook_last_error = ""
+
+def _run_keystone_hero_controller() -> None:
+    global _keystone_hero_hook_logged, _keystone_hero_hook_last_error
+
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+
+    try:
+        from Py4GWCoreLib.Builds.Skills import KeystoneMesmerHeroController
+
+        if not _keystone_hero_hook_logged:
+            _keystone_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_KEYSTONE_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+                CombatDebug.flush_pending(force=True)
+
+        # Keep the controller tied to HeroAI's Combat toggle. If combat is
+        # disabled, run(enabled=False) restores every native hero-AI skill flag.
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        KeystoneMesmerHeroController.run(enabled=enabled)
+
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _keystone_hero_hook_last_error:
+            _keystone_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_KEYSTONE_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__,
+                        detail=str(exc)[:220],
+                    )
+                    CombatDebug.flush_pending(force=True)
+                except Exception:
+                    pass
+
+
+
+# ---------------------------------------------------------------------------
+# RoJ Monk Hero controller hook
+# ---------------------------------------------------------------------------
+# RoJ heroes use the same guaranteed per-frame HeroAI runtime as Keystone.
+# This removes dependence on the optional legacy "HR RoJ Hero Controller" widget.
+_roj_hero_hook_logged = False
+_roj_hero_hook_last_error = ""
+
+def _run_roj_hero_controller() -> None:
+    global _roj_hero_hook_logged, _roj_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import RoJMonkHeroController
+        if not _roj_hero_hook_logged:
+            _roj_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_ROJ_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+                CombatDebug.flush_pending(force=True)
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        RoJMonkHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _roj_hero_hook_last_error:
+            _roj_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_ROJ_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                    CombatDebug.flush_pending(force=True)
+                except Exception:
+                    pass
+
+
+# ---------------------------------------------------------------------------
+# PI / Restoration Mesmer Hero controller hook
+# ---------------------------------------------------------------------------
+_pi_resto_hero_hook_logged = False
+_pi_resto_hero_hook_last_error = ""
+
+
+def _run_pi_resto_hero_controller() -> None:
+    global _pi_resto_hero_hook_logged, _pi_resto_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import PIRestorationHeroController
+        if not _pi_resto_hero_hook_logged:
+            _pi_resto_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_PI_RESTO_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        PIRestorationHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _pi_resto_hero_hook_last_error:
+            _pi_resto_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_PI_RESTO_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                except Exception:
+                    pass
+
+
+# ---------------------------------------------------------------------------
+# Fire Elementalist Hero controller hook (PI -> Bed of Coals)
+# ---------------------------------------------------------------------------
+_fire_hero_hook_logged = False
+_fire_hero_hook_last_error = ""
+
+def _run_fire_hero_controller() -> None:
+    global _fire_hero_hook_logged, _fire_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import FireElementalistHeroController
+        if not _fire_hero_hook_logged:
+            _fire_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_FIRE_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+                CombatDebug.flush_pending(force=True)
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        FireElementalistHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _fire_hero_hook_last_error:
+            _fire_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_FIRE_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                    CombatDebug.flush_pending(force=True)
+                except Exception:
+                    pass
+
+
+
+# ---------------------------------------------------------------------------
+# HR Mesmerway Hero Panic controller hook
+# ---------------------------------------------------------------------------
+_panic_hero_hook_logged = False
+_panic_hero_hook_last_error = ""
+
+
+def _run_panic_hero_controller() -> None:
+    global _panic_hero_hook_logged, _panic_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import PanicMesmerHeroController
+        if not _panic_hero_hook_logged:
+            _panic_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_PANIC_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        PanicMesmerHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _panic_hero_hook_last_error:
+            _panic_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_PANIC_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                except Exception:
+                    pass
+
+
+# ---------------------------------------------------------------------------
+# Urgoz Frost Ranger/Mesmer hero controller hook
+# ---------------------------------------------------------------------------
+_frost_ranger_hero_hook_logged = False
+_frost_ranger_hero_hook_last_error = ""
+
+
+def _run_frost_ranger_hero_controller() -> None:
+    global _frost_ranger_hero_hook_logged, _frost_ranger_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import FrostRangerMesmerHeroController
+        if not _frost_ranger_hero_hook_logged:
+            _frost_ranger_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_FROST_RANGER_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        FrostRangerMesmerHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _frost_ranger_hero_hook_last_error:
+            _frost_ranger_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_FROST_RANGER_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                except Exception:
+                    pass
+
+
+# ---------------------------------------------------------------------------
+# HR Mesmerway Hero BiP controller hook
+# ---------------------------------------------------------------------------
+_bip_hero_hook_logged = False
+_bip_hero_hook_last_error = ""
+
+
+def _run_bip_hero_controller() -> None:
+    global _bip_hero_hook_logged, _bip_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import BiPHeroController
+        if not _bip_hero_hook_logged:
+            _bip_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_BIP_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        BiPHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _bip_hero_hook_last_error:
+            _bip_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_BIP_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                except Exception:
+                    pass
+
+
+# ---------------------------------------------------------------------------
+# Aura-of-the-Lich Minion Bomber hero controller hook
+# ---------------------------------------------------------------------------
+_minion_bomber_hero_hook_logged = False
+_minion_bomber_hero_hook_last_error = ""
+
+
+def _run_minion_bomber_hero_controller() -> None:
+    global _minion_bomber_hero_hook_logged, _minion_bomber_hero_hook_last_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CombatDebug
+    except Exception:
+        CombatDebug = None
+    try:
+        from Py4GWCoreLib.Builds.Skills import MinionBomberHeroController
+        if not _minion_bomber_hero_hook_logged:
+            _minion_bomber_hero_hook_logged = True
+            if CombatDebug is not None:
+                CombatDebug.log_event(
+                    "HERO_MINION_BOMBER_HEROAI_HOOK_ACTIVE",
+                    source="Widgets/Automation/Multiboxing/HeroAI.py",
+                )
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        MinionBomberHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:220]}"
+        if error_text != _minion_bomber_hero_hook_last_error:
+            _minion_bomber_hero_hook_last_error = error_text
+            if CombatDebug is not None:
+                try:
+                    CombatDebug.log_event(
+                        "HERO_MINION_BOMBER_HEROAI_HOOK_ERROR",
+                        error=type(exc).__name__, detail=str(exc)[:220],
+                    )
+                except Exception:
+                    pass
+
 #region real_main
 def configure():
     draw_configure_window(MODULE_NAME, HeroAI_FloatingWindows.configure_window)
@@ -435,10 +785,125 @@ def tooltip():
 
 modulo = 0
 
+
+def _local_party_has_heroes() -> bool:
+    """Return True only when this *local player* owns at least one hero.
+
+    Party.GetHeroes() is party-wide in multibox play, so using bool(GetHeroes())
+    made every one of the 8 player clients scan the four heroes owned by the HR
+    account. Hero records carry owner_player_id (login number), which lets us
+    distinguish local ownership without touching hero skillbars or cached_data.
+    On API uncertainty we fail open so the real hero owner never misses the
+    map-entry skill lock.
+    """
+    try:
+        own_login = int(Player.GetLoginNumber() or 0)
+        heroes = list(Party.GetHeroes() or [])
+        if own_login <= 0:
+            return True
+        return any(int(getattr(hero, "owner_player_id", -1) or -1) == own_login for hero in heroes)
+    except Exception:
+        return True
+
+
+def _run_global_mesmer_hero_controller() -> None:
+    """Drive owned eSurge/Ineptitude heroes; player builds remain unchanged."""
+    global _global_mesmer_hero_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import GlobalMesmerHeroController
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        GlobalMesmerHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:160]}"
+        if error_text != _global_mesmer_hero_error:
+            _global_mesmer_hero_error = error_text
+            try:
+                from Py4GWCoreLib.Builds.Skills import CombatDebug
+                CombatDebug.log_event('GLOBAL_MESMER_HERO_HOOK_ERROR', error=error_text)
+            except Exception:
+                pass
+
+_global_mesmer_hero_error = ""
+
+
+
+# New solo-account Keystone variant support. The original Keystone hero
+# controller keeps ownership of its older, fully specified Mimicry bar.
+_solo_keystone_hook_error = ""
+_solo_keystone_hook_logged = False
+
+def _run_solo_keystone_variants() -> None:
+    global _solo_keystone_hook_error, _solo_keystone_hook_logged
+    try:
+        from Py4GWCoreLib.Builds.Skills import SoloKeystoneHeroController
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        if not _solo_keystone_hook_logged:
+            _solo_keystone_hook_logged = True
+            try:
+                from Py4GWCoreLib.Builds.Skills import CombatDebug
+                CombatDebug.log_event('SOLO_KEYSTONE_HOOK_ACTIVE', enabled=enabled,
+                                      policy='local_owner_only_build_specific')
+            except Exception:
+                pass
+        SoloKeystoneHeroController.run(enabled=enabled)
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:150]}"
+        if error_text != _solo_keystone_hook_error:
+            _solo_keystone_hook_error = error_text
+            try:
+                from Py4GWCoreLib.Builds.Skills import CombatDebug
+                CombatDebug.log_event("SOLO_KEYSTONE_HOOK_ERROR", detail=error_text)
+            except Exception:
+                pass
+
+_city_bonder_hero_hook_error = ""
+
+
+def _run_city_bonder_hero_controller() -> None:
+    global _city_bonder_hero_hook_error
+    try:
+        from Py4GWCoreLib.Builds.Skills import CityBonderHeroController
+        options = getattr(cached_data, "account_options", None)
+        enabled = bool(options is None or getattr(options, "Combat", True))
+        CityBonderHeroController.run(enabled=enabled, owner="widget")
+    except Exception as exc:
+        error_text = f"{type(exc).__name__}:{str(exc)[:160]}"
+        if error_text != _city_bonder_hero_hook_error:
+            _city_bonder_hero_hook_error = error_text
+            try:
+                from Py4GWCoreLib.Builds.Skills import CombatDebug
+                CombatDebug.log_event("CITY_BONDER_HEROAI_HOOK_ERROR", error=error_text)
+            except Exception:
+                pass
+
+
 def main():
     global cached_data, map_quads, modulo
     
     try:
+        # Arm/lock Keystone heroes before the heavier HeroAI cache/BT update.
+        # This minimizes the map-entry window in which native Hero AI could
+        # fire Arcane Mimicry before the dedicated controller owns the bar.
+        # Accounts without locally owned heroes do not need any of the custom
+        # hero-controller discovery passes. This keeps the 8-account setup quiet
+        # and avoids thousands of HERO_*_NO_MATCH diagnostics without changing
+        # player-account combat logic. Hero-owning accounts still execute these
+        # hooks before cached_data.Update(), preserving the map-entry AI lock.
+        if _local_party_has_heroes():
+            _run_keystone_hero_controller()
+            _run_solo_keystone_variants()
+            _run_roj_hero_controller()
+            _run_pi_resto_hero_controller()
+            _run_fire_hero_controller()
+            _run_panic_hero_controller()
+            _run_global_mesmer_hero_controller()
+            _run_frost_ranger_hero_controller()
+            _run_bip_hero_controller()
+            _run_minion_bomber_hero_controller()
+            _run_city_bonder_hero_controller()
+
         cached_data.Update()
 
         EnsureFollowModuleIni()
@@ -481,4 +946,13 @@ def on_enable():
     HeroAI_FloatingWindows.settings.reset()
     HeroAI_FloatingWindows.SETTINGS_THROTTLE.SetThrottleTime(50)
 
-__all__ = ['main', 'configure', 'on_enable']
+
+def on_disable():
+    try:
+        from Py4GWCoreLib.Builds.Skills import CityBonderHeroController
+        CityBonderHeroController.reset(owner="widget")
+    except Exception:
+        pass
+
+
+__all__ = ['main', 'configure', 'on_enable', 'on_disable']

@@ -1,5 +1,9 @@
 # Widget Manager And Catalog
 
+Status: current
+Scope: widget discovery, catalog queries, runtime control, and BotsHub
+Authority: current `WidgetManager` source and offline BotsHub checks
+
 This document explains how widget handling currently works in Py4GW, and how the newer `WidgetCatalog` layer fits on top of the existing widget runtime.
 
 The goal is to make it easy to build alternate widget UIs without having to re-derive discovery rules, folder structure, metadata, and filtering logic each time.
@@ -376,3 +380,13 @@ If you want to build a true explorer-style widget UI, the intended flow is:
 6. Use `WidgetHandler` to perform enable/disable/configure actions
 
 That keeps discovery and runtime behavior aligned with the existing system while making the UI layer much easier to evolve.
+
+## BotsHub Bot-Focused Consumer
+
+`Widgets/Automation/Bots/BotsHub.py` applies this ownership split to the bots under `Automation/Bots`. Its sibling `.widget` marker makes that folder a discovery root. The hub uses `WidgetCatalog` for search, group, and open/closed filters, and uses `WidgetHandler` for enable, disable, and configure actions. Account-scoped `Settings` retains the selected group, status filter, and widget ID.
+
+`WidgetHandler.enable_widget()` and `disable_widget()` accept either a plain widget name or a full `folder_script_name`. BotsHub passes the full ID so same-named scripts in different folders cannot resolve to the wrong bot.
+
+Opening a bot enables its callbacks and shows its own interface; it does not start its farm. Farm Start/Stop, build and team setup, inventory rules, and run statistics remain bot-owned because the bots do not share a generic contract for those operations.
+
+The implementation ports the hub role of the supplied AutoIt BotsHub 2.0 launcher, not its missing `lib/` and `src/` farm implementations. Offline verification covers discovery filtering and full-ID control routing in `Examples and tests/tests/test_botshub_widget.py`. Injected-client rendering and live bot interaction have not been runtime-verified.

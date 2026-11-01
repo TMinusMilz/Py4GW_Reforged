@@ -24,6 +24,41 @@ class RestorationMagic:
     def _has_spirit_in_earshot(self) -> bool:
         return bool(Routines.Agents.GetNearestSpirit(Range.Earshot.value))
 
+    @staticmethod
+    def _actual_party_agent_ids() -> set[int]:
+        """Return real party members only (players/heroes/henchmen).
+
+        Allied NPCs, pets, spirits and especially minions are intentionally
+        excluded. Restoration heals in this project are party resources and
+        must never be spent keeping disposable minions alive.
+        """
+        try:
+            from Py4GWCoreLib import Party
+        except Exception:
+            return set()
+
+        result: set[int] = set()
+        try:
+            for player in Party.GetPlayers() or []:
+                login_number = int(getattr(player, "login_number", 0) or 0)
+                agent_id = int(Party.Players.GetAgentIDByLoginNumber(login_number) or 0)
+                if agent_id > 0:
+                    result.add(agent_id)
+        except Exception:
+            pass
+
+        for getter_name in ("GetHeroes", "GetHenchmen"):
+            try:
+                getter = getattr(Party, getter_name)
+                for member in getter() or []:
+                    agent_id = int(getattr(member, "agent_id", 0) or 0)
+                    if agent_id > 0:
+                        result.add(agent_id)
+            except Exception:
+                continue
+
+        return result
+
     #region B
     def Breath_of_the_Great_Dwarf(self) -> BuildCoroutine:
         if False:
@@ -59,6 +94,78 @@ class RestorationMagic:
         ))
     #endregion
 
+    #region G
+    def Ghostmirror_Light(
+        self,
+        *,
+        health_threshold: float = 0.66,
+    ) -> BuildCoroutine:
+        """Heal the lowest injured *other* formal party member.
+
+        Stage 2.42 adds first-class support for the live N/Rt BiP account bar.
+        Ghostmirror Light cannot target the caster; if a spirit is in earshot the
+        game also heals the caster automatically, so target selection should stay
+        focused on the most injured other party member rather than treating the
+        self-heal as a separate action.  Pets/minions/NPCs remain excluded using
+        the same formal-party filter as the other Restoration heals.
+        """
+        ghostmirror_id: int = Skill.GetID("Ghostmirror_Light")
+        if not self.build.IsSkillEquipped(ghostmirror_id):
+            return False
+        if not self.build.CanCastSkillID(ghostmirror_id):
+            return False
+
+        threshold = max(0.0, min(1.0, float(health_threshold)))
+        party_agent_ids = self._actual_party_agent_ids()
+        if not party_agent_ids:
+            return False
+        try:
+            from Py4GWCoreLib.HeroAI.targeting import GetAllAlliesArray
+            ally_array = list(GetAllAlliesArray(Range.Spellcast.value) or [])
+        except Exception:
+            ally_array = []
+
+        player_id = int(Player.GetAgentID() or 0)
+        candidates: list[tuple[float, int]] = []
+        for raw_agent_id in ally_array:
+            agent_id = int(raw_agent_id or 0)
+            if agent_id <= 0 or agent_id == player_id or agent_id not in party_agent_ids:
+                continue
+            try:
+                if not Routines.Checks.Agents.IsAlive(agent_id):
+                    continue
+                hp = float(Routines.Checks.Agents.GetHealth(agent_id))
+            except Exception:
+                continue
+            if hp < threshold:
+                candidates.append((hp, agent_id))
+        if not candidates:
+            return False
+
+        candidates.sort(key=lambda item: (item[0], item[1]))
+        hp, target_id = candidates[0]
+        did_cast = bool((yield from self.build.CastSkillID(
+            skill_id=ghostmirror_id,
+            target_agent_id=int(target_id),
+            log=False,
+            aftercast_delay=250,
+        )))
+        if did_cast:
+            try:
+                from Py4GWCoreLib.Builds.Skills import CombatDebug
+                CombatDebug.log_event(
+                    "RESTORATION_GHOSTMIRROR_LIGHT_CAST",
+                    target_id=int(target_id),
+                    target_hp=f"{float(hp):.3f}",
+                    threshold=f"{float(threshold):.3f}",
+                    spirit_in_earshot=bool(self._has_spirit_in_earshot()),
+                    policy="stage2_42_bip_other_party_heal_with_optional_self_heal",
+                )
+            except Exception:
+                pass
+        return bool(did_cast)
+    #endregion
+
     #region M
     def Mend_Body_and_Soul(
         self,
@@ -66,6 +173,7 @@ class RestorationMagic:
         health_threshold: float | None = None,
         cleanse_blind_martial: bool = False,
         cleanse_cripple_melee: bool = False,
+        self_only: bool = False,
     ) -> BuildCoroutine:
         from Py4GWCoreLib.HeroAI.targeting import GetAllAlliesArray
 
@@ -74,6 +182,28 @@ class RestorationMagic:
 
         if not self.build.IsSkillEquipped(mend_body_and_soul_id):
             return False
+
+        party_agent_ids = self._actual_party_agent_ids()
+        if not party_agent_ids:
+            # Fail closed: never fall back to the broad ally array here because
+            # that array also contains minions/pets/NPCs.
+            return False
+
+        if self_only:
+            caster_id = int(Player.GetAgentID() or 0)
+            threshold = max(0.0, min(1.0, float(health_threshold if health_threshold is not None else 0.70)))
+            def _self_heal_needed() -> bool:
+                return bool(
+                    caster_id > 0 and caster_id in party_agent_ids
+                    and Agent.IsAlive(caster_id)
+                    and float(Agent.GetHealth(caster_id)) < threshold
+                )
+            if cleanse_blind_martial or cleanse_cripple_melee or not _self_heal_needed():
+                return False
+            return (yield from self.build.CastSkillIDAndRestoreTarget(
+                mend_body_and_soul_id, caster_id,
+                extra_condition=_self_heal_needed, dispatch_guard=_self_heal_needed,
+            ))
 
         # Cleanse-oriented tiers: MBaS removes one condition per cast only when a
         # spirit is in earshot, so gate the tier on the spirit + profession-specific
@@ -93,8 +223,10 @@ class RestorationMagic:
             ally_array = GetAllAlliesArray(Range.Spellcast.value) or []
             candidates = [
                 agent_id for agent_id in ally_array
-                if Agent.IsValid(agent_id)
+                if int(agent_id) in party_agent_ids
+                and Agent.IsValid(agent_id)
                 and Agent.IsAlive(agent_id)
+                and not Agent.IsMinion(agent_id)
                 and profession_predicate(agent_id)
                 and condition_predicate(agent_id)
             ]
@@ -126,7 +258,12 @@ class RestorationMagic:
                     mend_body_and_soul_id,
                     mend_body_and_soul,
                     variants=variants,
-                    validator=lambda aid: Agent.IsAlive(aid) and Agent.GetHealth(aid) < threshold,
+                    validator=lambda aid: (
+                        int(aid) in party_agent_ids
+                        and Agent.IsAlive(aid)
+                        and not Agent.IsMinion(aid)
+                        and Agent.GetHealth(aid) < threshold
+                    ),
                 )
 
             target_agent_id = _resolve_mend_body_and_soul_target()
@@ -338,6 +475,7 @@ class RestorationMagic:
         self,
         *,
         health_threshold: float | None = None,
+        self_only: bool = False,
     ) -> BuildCoroutine:
         spirit_light_id: int = Skill.GetID("Spirit_Light")
         spirit_light: CustomSkill = self.build.GetCustomSkill(spirit_light_id)
@@ -349,17 +487,75 @@ class RestorationMagic:
         threshold = max(0.0, min(1.0, threshold))
 
         def _can_safely_cast_spirit_light() -> bool:
+            try:
+                own_health = float(Routines.Checks.Agents.GetHealth(Player.GetAgentID()))
+            except Exception:
+                own_health = float(Agent.GetHealth(Player.GetAgentID()))
             return (
                 self._has_spirit_in_earshot()
-                or Agent.GetHealth(Player.GetAgentID()) > spirit_light.Conditions.SacrificeHealth
+                or own_health > spirit_light.Conditions.SacrificeHealth
             )
 
         def _resolve_spirit_light_target() -> int:
-            if self._has_spirit_in_earshot():
+            # EXP3: choose directly from same-party allies using shared-memory
+            # health. ResolvePreferredAllyTarget first ranks with the local
+            # TargetLowestAlly helper; in multibox runs that local HP snapshot
+            # can disagree with shared AgentData. The EXP2 telemetry caught
+            # exactly that case: a shared-health candidate below threshold was
+            # known, yet the helper selected/rejected another ally and returned
+            # no target. Direct shared-health ranking removes that split-brain
+            # path while retaining spellcast range and party-only filtering.
+            try:
+                from Py4GWCoreLib.HeroAI.targeting import GetAllAlliesArray
+                ally_array = list(GetAllAlliesArray(Range.Spellcast.value) or [])
+            except Exception:
+                ally_array = []
+
+            party_agent_ids = self._actual_party_agent_ids()
+            spirit_near = self._has_spirit_in_earshot()
+            player_id = int(Player.GetAgentID() or 0)
+            candidates: list[tuple[float, int]] = []
+
+            for raw_agent_id in ally_array:
+                agent_id = int(raw_agent_id or 0)
+                if agent_id <= 0:
+                    continue
+                if party_agent_ids and agent_id not in party_agent_ids:
+                    continue
+                # Without a spirit, preserve the existing safety policy: do
+                # not self-cast Spirit Light and pay the sacrifice into our own
+                # heal. Other allies remain valid if the caster can safely pay.
+                if not spirit_near and agent_id == player_id:
+                    continue
+                try:
+                    if not Routines.Checks.Agents.IsAlive(agent_id):
+                        continue
+                    hp = float(Routines.Checks.Agents.GetHealth(agent_id))
+                except Exception:
+                    continue
+                if hp < threshold:
+                    candidates.append((hp, agent_id))
+
+            if candidates:
+                candidates.sort(key=lambda item: (item[0], item[1]))
+                return int(candidates[0][1])
+
+            # EXP10: never spend Spirit Light on non-party allies. If we can
+            # resolve the party but no party member is below threshold, there
+            # is intentionally no heal target (prevents NPC/minion overheal).
+            if party_agent_ids:
+                return 0
+
+            # Conservative fallback only when the party API itself is temporarily
+            # unavailable.
+            if spirit_near:
                 return self.build.ResolvePreferredAllyTarget(
                     spirit_light_id,
                     spirit_light,
-                    validator=lambda agent_id: Agent.IsAlive(agent_id) and Agent.GetHealth(agent_id) < threshold,
+                    validator=lambda agent_id: (
+                        Routines.Checks.Agents.IsAlive(agent_id)
+                        and Routines.Checks.Agents.GetHealth(agent_id) < threshold
+                    ),
                 )
 
             other_ally_skill = deepcopy(spirit_light)
@@ -368,9 +564,9 @@ class RestorationMagic:
                 spirit_light_id,
                 other_ally_skill,
                 validator=lambda agent_id: (
-                    Agent.IsAlive(agent_id)
-                    and agent_id != Player.GetAgentID()
-                    and Agent.GetHealth(agent_id) < threshold
+                    Routines.Checks.Agents.IsAlive(agent_id)
+                    and agent_id != player_id
+                    and Routines.Checks.Agents.GetHealth(agent_id) < threshold
                 ),
             )
 
@@ -378,6 +574,25 @@ class RestorationMagic:
             return False
         if not _can_safely_cast_spirit_light():
             return False
+
+        if self_only:
+            caster_id = int(Player.GetAgentID() or 0)
+            party_ids = self._actual_party_agent_ids()
+            def _safe_self_heal() -> bool:
+                # Never self-cast Spirit Light without a nearby spirit: that
+                # would sacrifice the BiP caster's HP rather than recover it.
+                return bool(
+                    caster_id > 0 and caster_id in party_ids
+                    and Agent.IsAlive(caster_id)
+                    and float(Agent.GetHealth(caster_id)) < threshold
+                    and self._has_spirit_in_earshot()
+                )
+            if not _safe_self_heal():
+                return False
+            return (yield from self.build.CastSkillIDAndRestoreTarget(
+                spirit_light_id, caster_id,
+                extra_condition=_safe_self_heal, dispatch_guard=_safe_self_heal,
+            ))
 
         target_agent_id = _resolve_spirit_light_target()
         if not target_agent_id:

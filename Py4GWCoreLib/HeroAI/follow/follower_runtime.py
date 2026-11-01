@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Callable
 
 from Py4GWCoreLib import ActionQueueManager, Agent, GLOBAL_CACHE, Range, SharedCommandType, Utils, Weapon
 from Py4GWCoreLib.Map import Map
@@ -140,9 +141,36 @@ def is_follow_recovery_active(cached_data: CacheData, state: FollowExecutionStat
     return True
 
 
+def should_hold_follow_for_cast(
+    player_id: int,
+    cached_data: CacheData,
+    cast_pending: Callable[[], bool] | None = None,
+) -> bool:
+    """Protect native casts and queued/aftercast windows; never command movement.
+
+    This check does not modify combat, formation or user flags.  Unavailable
+    optional runtime information is ignored, preserving legacy follow.
+    """
+    if Agent.IsCasting(int(player_id)):
+        return True
+    try:
+        if cached_data.combat_handler.InCastingRoutine():
+            return True
+    except Exception:
+        pass
+    try:
+        if cast_pending is not None and bool(cast_pending()):
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def execute_follower_follow(
     cached_data: CacheData,
     state: FollowExecutionState,
+    *,
+    cast_pending: Callable[[], bool] | None = None,
 ) -> BehaviorTree.NodeState:
     follow_active_state = BehaviorTree.NodeState.SUCCESS
 
@@ -209,7 +237,9 @@ def execute_follower_follow(
 
     recovery_active = is_follow_recovery_active(cached_data, state)
 
-    if Agent.IsCasting(player_agent_id):
+    # No new follow movement while casting, pending in the ACTION queue or
+    # inside the BuildMgr aftercast window. Existing distances stay unchanged.
+    if should_hold_follow_for_cast(player_agent_id, cached_data, cast_pending):
         return BehaviorTree.NodeState.FAILURE
 
     map_sig = (
@@ -243,6 +273,68 @@ def execute_follower_follow(
         and bool(getattr(leader_options, "IsFlagged", False))
         and _is_nonzero_xy(float(leader_options.AllFlag.x), float(leader_options.AllFlag.y))
     )
+
+    # Guarded emergency support retreat: no movement unless the ENTIRE short
+    # corridor is screened against new enemy packs and active AoE zones.
+    # Explicit flags stay higher priority than autonomous movement.
+    if not (own_flag_active or all_flag_active):
+        try:
+            from Py4GWCoreLib.Builds.Skills.SupportGuardSafety import service_guarded_retreat
+            guard_action = service_guarded_retreat()
+            if guard_action == "move":
+                cached_data.follow_throttle_timer.Reset()
+                return follow_active_state
+            if guard_action == "hold":
+                cached_data.follow_throttle_timer.Reset()
+                return BehaviorTree.NodeState.FAILURE  # let protection/skills run
+        except Exception:
+            pass
+
+    # EXP36 Stage 15 / E16 movement contract:
+    # manual own/all flags > confirmed lethal AoE > recovery > normal follow.
+    # The policy module itself allows only ST and high-confidence PI movement;
+    # the leader never enters this follower path.
+    try:
+        from Py4GWCoreLib.Builds.Skills import TeamMovementPolicy
+        if TeamMovementPolicy.service_danger_movement(
+            manual_flag_active=bool(own_flag_active or all_flag_active)
+        ):
+            cached_data.follow_throttle_timer.Reset()
+            return follow_active_state
+    except Exception:
+        pass
+
+    # If an AoE escape was rejected for new-pack/path risk, do not let normal
+    # follow immediately issue a less safe replacement move. Keep combat live.
+    if not (own_flag_active or all_flag_active):
+        try:
+            from Py4GWCoreLib.Builds.Skills.SupportGuardSafety import recent_unsafe_path_hold
+            if recent_unsafe_path_hold():
+                cached_data.follow_throttle_timer.Reset()
+                return BehaviorTree.NodeState.FAILURE
+        except Exception:
+            pass
+
+    # EXP36 Stage 16 / E20: after manual flags and confirmed AoE danger, a
+    # catastrophic team state may own movement to a previously verified safe
+    # formation point.  "hold" intentionally returns FAILURE so normal combat/
+    # healing/resurrection may run, while this Follow invocation does not issue
+    # a formation move back into the failed pull.
+    try:
+        from Py4GWCoreLib.Builds.Skills import TeamRecovery
+        recovery_action = TeamRecovery.service_recovery_movement(
+            anchor_hint=get_follow_destination_xy(cached_data),
+            manual_flag_active=bool(own_flag_active or all_flag_active),
+            is_leader=False,
+        )
+        if str(recovery_action) == "move":
+            cached_data.follow_throttle_timer.Reset()
+            return follow_active_state
+        if str(recovery_action) == "hold":
+            cached_data.follow_throttle_timer.Reset()
+            return BehaviorTree.NodeState.FAILURE
+    except Exception:
+        pass
 
     follow_threshold_raw = float(options.FollowMoveThreshold)
     combat_threshold_raw = float(options.FollowMoveThresholdCombat)

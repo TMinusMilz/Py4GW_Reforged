@@ -182,11 +182,20 @@ class Communing:
 
     #region D
     def Displacement(self) -> BuildCoroutine:
+        # Confirmed HM Stygian Veil environmental rule; never infer a subzone
+        # from the shared DoA Map ID alone. Shelter and Union remain available.
+        from Py4GWCoreLib.Builds.Skills import GlobalCombatRules
+        if GlobalCombatRules.displacement_is_hazardous():
+            return False
         displacement_id: int = Skill.GetID("Displacement")
         return (yield from self._cast_protective_spirit(displacement_id))
     #endregion
 
     #region S
+    def Earthbind(self) -> BuildCoroutine:
+        earthbind_id: int = Skill.GetID("Earthbind")
+        return (yield from self._cast_protective_spirit(earthbind_id))
+
     def Shelter(self) -> BuildCoroutine:
         shelter_id: int = Skill.GetID("Shelter")
         return (yield from self._cast_protective_spirit(shelter_id))

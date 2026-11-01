@@ -764,7 +764,7 @@ class WidgetHandler:
         return _widgets_revision
 
     def _set_widget_state(self, name: str, state: bool):
-        widget = self._get_widget_by_plain_name(name)
+        widget = self.get_widget_info(name)
         if not widget:
             PySystem.Console.Log("WidgetHandler", f"Widget '{name}' not found", PySystem.Console.MessageType.Warning)
             return

@@ -544,3 +544,47 @@ class PvE:
             ((Agent.GetXY(aid)[0] - me_x) ** 2 + (Agent.GetXY(aid)[1] - me_y) ** 2) ** 0.5,
         ))
         return (yield from self.build.CastSkillIDAndRestoreTarget(sh_id, int(candidates[0])))
+
+    def Dwarven_Stability(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE, Player, Routines
+
+        dwarven_stability_id: int = Skill.GetID("Dwarven_Stability")
+        if not self.build.IsSkillEquipped(dwarven_stability_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if getattr(Routines.Checks.Effects, "HasBuff")(player_agent_id, dwarven_stability_id):
+            remaining_ms = int(getattr(GLOBAL_CACHE.Effects, "GetEffectTimeRemaining")(
+                player_agent_id,
+                dwarven_stability_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=dwarven_stability_id,
+            log=False,
+            aftercast_delay=250,
+        ))
+
+    def I_Am_Unstoppable(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE, Player, Routines
+
+        i_am_unstoppable_id: int = Skill.GetID("I_Am_Unstoppable")
+        if not self.build.IsSkillEquipped(i_am_unstoppable_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if getattr(Routines.Checks.Effects, "HasBuff")(player_agent_id, i_am_unstoppable_id):
+            remaining_ms = int(getattr(GLOBAL_CACHE.Effects, "GetEffectTimeRemaining")(
+                player_agent_id,
+                i_am_unstoppable_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=i_am_unstoppable_id,
+            log=False,
+            aftercast_delay=250,
+        ))

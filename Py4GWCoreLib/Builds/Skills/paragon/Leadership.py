@@ -25,16 +25,91 @@ class Leadership:
         return int(getattr(leadership, "level", 0) or 0)
 
     def IsHeroicRefrainSelfReady(self) -> bool:
-        """Return whether the self copy has completed the +4 bootstrap."""
+        """Return whether the self copy of Heroic Refrain is active.
+
+        Older project code used a Leadership >=20 test that assumed the former
+        +4 Heroic Refrain value.  The live skill no longer guarantees that
+        number, so keeping the rank gate can make the Paragon recast HR on self
+        forever instead of spreading it.  The effect itself is authoritative.
+        """
         heroic_refrain_id = Skill.GetID("Heroic_Refrain")
         player_agent_id = Player.GetAgentID()
-        return (
-            Routines.Checks.Agents.HasEffect(player_agent_id, heroic_refrain_id)
-            and self._get_leadership_level() >= 20
-        )
+        return bool(Routines.Checks.Agents.HasEffect(player_agent_id, heroic_refrain_id))
 
     def _heroic_refrain_needs_self_bootstrap(self, heroic_refrain_id: int) -> bool:
         return not self.IsHeroicRefrainSelfReady()
+
+    @staticmethod
+    def _shared_skillbar_ids(account) -> set[int]:
+        try:
+            skillbar = getattr(getattr(account, "AgentData", None), "Skillbar", None)
+            return {
+                int(getattr(skill, "Id", 0) or 0)
+                for skill in (getattr(skillbar, "Skills", ()) or ())
+                if int(getattr(skill, "Id", 0) or 0) > 0
+            }
+        except Exception:
+            return set()
+
+    def _mending_refrain_owner_target(self, heroic_refrain_id: int) -> int:
+        """Prioritize whichever account carries Mending Refrain immediately after self.
+
+        Mending Refrain snapshots the caster's Motivation when applied. Giving
+        the Mending owner Heroic Refrain before it starts its OOC spread makes
+        those copies use the HR-boosted Motivation value.
+        """
+        try:
+            from Py4GWCoreLib import Agent, GLOBAL_CACHE, Range, Utils
+            from Py4GWCoreLib.HeroAI.utils import CheckForEffect, SameMapOrPartyAsAccount
+
+            mending_refrain_id = int(Skill.GetID("Mending_Refrain") or 0)
+            if mending_refrain_id <= 0:
+                return 0
+
+            own_party_id = int(GLOBAL_CACHE.Party.GetPartyID() or 0)
+            player_id = int(Player.GetAgentID() or 0)
+            player_xy = Player.GetXY()
+            candidates: list[int] = []
+
+            def consider(account) -> None:
+                if not getattr(account, "IsSlotActive", False) or getattr(account, "IsIsolated", False):
+                    return
+                if not SameMapOrPartyAsAccount(account):
+                    return
+                party_id = int(getattr(getattr(account, "AgentPartyData", None), "PartyID", 0) or 0)
+                if own_party_id > 0 and party_id != own_party_id:
+                    return
+                agent_data = getattr(account, "AgentData", None)
+                agent_id = int(getattr(agent_data, "AgentID", 0) or 0)
+                if agent_id <= 0 or agent_id == player_id:
+                    return
+                if mending_refrain_id not in self._shared_skillbar_ids(account):
+                    return
+                if not Agent.IsValid(agent_id) or not Agent.IsAlive(agent_id):
+                    return
+                if Utils.Distance(Agent.GetXY(agent_id), player_xy) > float(Range.Spellcast.value):
+                    return
+                if CheckForEffect(agent_id, int(heroic_refrain_id)):
+                    return
+                candidates.append(agent_id)
+
+            for account in GLOBAL_CACHE.ShMem.GetAllAccountData() or []:
+                consider(account)
+                owner_id = int(getattr(getattr(account, "AgentData", None), "AgentID", 0) or 0)
+                for hero_account in GLOBAL_CACHE.ShMem.GetHeroesFromPlayers(owner_id) or []:
+                    consider(hero_account)
+
+            return min(candidates) if candidates else 0
+        except Exception:
+            return 0
+
+    @staticmethod
+    def _log_hr_event(event: str, **fields) -> None:
+        try:
+            from Py4GWCoreLib.Builds.Skills import CombatDebug
+            CombatDebug.log_event(str(event), **fields)
+        except Exception:
+            pass
 
     #region H
     def Heroic_Refrain(self) -> BuildCoroutine:
@@ -46,12 +121,36 @@ class Leadership:
 
         player_agent_id = Player.GetAgentID()
         if self._heroic_refrain_needs_self_bootstrap(heroic_refrain_id):
-            return (yield from self.build.CastSkillIDAndRestoreTarget(
+            did_cast = yield from self.build.CastSkillIDAndRestoreTarget(
                 skill_id=heroic_refrain_id,
                 target_agent_id=player_agent_id,
                 log=False,
                 aftercast_delay=250,
-            ))
+            )
+            if did_cast:
+                self._log_hr_event(
+                    "HR_HEROIC_SELF_BOOTSTRAP",
+                    target_id=int(player_agent_id),
+                    policy="self_first_then_mending_owner_then_party",
+                )
+            return bool(did_cast)
+
+        mending_owner = int(self._mending_refrain_owner_target(heroic_refrain_id) or 0)
+        if mending_owner > 0:
+            did_cast = yield from self.build.CastSkillIDAndRestoreTarget(
+                skill_id=heroic_refrain_id,
+                target_agent_id=mending_owner,
+                log=False,
+                aftercast_delay=250,
+            )
+            if did_cast:
+                self._log_hr_event(
+                    "HR_HEROIC_MENDING_OWNER_PRIORITY",
+                    target_id=int(mending_owner),
+                    policy="mending_owner_second_for_hr_boosted_motivation_snapshot",
+                )
+            return bool(did_cast)
+
         target_agent_id = self.build.ResolveAllyTarget(
             heroic_refrain_id,
             heroic_refrain,
@@ -59,12 +158,19 @@ class Leadership:
         if not target_agent_id:
             return False
 
-        return (yield from self.build.CastSkillIDAndRestoreTarget(
+        did_cast = yield from self.build.CastSkillIDAndRestoreTarget(
             skill_id=heroic_refrain_id,
             target_agent_id=target_agent_id,
             log=False,
             aftercast_delay=250,
-        ))
+        )
+        if did_cast:
+            self._log_hr_event(
+                "HR_HEROIC_PARTY_SPREAD",
+                target_id=int(target_agent_id),
+                policy="after_self_and_mending_owner",
+            )
+        return bool(did_cast)
     #endregion
 
     #region A

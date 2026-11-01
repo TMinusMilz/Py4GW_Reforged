@@ -534,7 +534,15 @@ class NoAttribute:
             return False
         if not self.build.IsInAggro():
             return False
-        if Routines.Checks.Agents.HasEffect(player_agent_id, skill_id):
+        if not self.build.CanCastSkillID(skill_id):
+            return False
+        is_save_yourselves = skill_id in {
+            Skill.GetID("Save_Yourselves_kurzick"),
+            Skill.GetID("Save_Yourselves_luxon"),
+        }
+        # Save Yourselves! protects *other* party members; the caster never
+        # acquires its effect. A caster-only HasEffect test always returns false.
+        if not is_save_yourselves and Routines.Checks.Agents.HasEffect(player_agent_id, skill_id):
             return False
 
         ally_array = Routines.Targeting.GetAllAlliesArray(Range.Earshot.value)
@@ -544,6 +552,17 @@ class NoAttribute:
         )
         if len(ally_array or []) < minimum_allies:
             return False
+        if is_save_yourselves:
+            recipients = [
+                int(aid) for aid in (ally_array or [])
+                if int(aid) != int(player_agent_id)
+            ]
+            if not recipients:
+                return False
+            # Check the recipients and do not waste adrenaline refreshing a
+            # still-active +100 armor shout. Cast again when protection drops.
+            if any(Routines.Checks.Agents.HasEffect(aid, skill_id) for aid in recipients):
+                return False
 
         cast_result = yield from self.build.CastSkillID(
             skill_id=skill_id,

@@ -195,8 +195,18 @@ class HeroAIHeadlessTree:
     def IsUserInterrupting(self) -> bool:
         return self._is_user_interrupting()
 
+    def _build_cast_window_active(self) -> bool:
+        build = self.heroai_build.GetBuildContract()
+        if build is None:
+            build = self.heroai_build
+        check = getattr(build, "HasLocalCastPending", None)
+        return bool(check()) if callable(check) else False
+
     def _follow(self) -> BehaviorTree.NodeState:
-        return execute_follower_follow(self.cached_data, self._follow_state)
+        return execute_follower_follow(
+            self.cached_data, self._follow_state,
+            cast_pending=self._build_cast_window_active,
+        )
 
     def IsLootingActive(self) -> bool:
         return bool(self._headless_looting_enabled) and self._is_looting_routine_active()
@@ -252,7 +262,17 @@ class HeroAIHeadlessTree:
         self.cached_data.UpdateCombat()
         return True
 
+    def _update_city_bonder(self) -> None:
+        try:
+            from Py4GWCoreLib.Builds.Skills import CityBonderHeroController
+            options = self.cached_data.account_options
+            enabled = self._headless_combat_enabled and bool(options is None or getattr(options, "Combat", True))
+            CityBonderHeroController.run(enabled=enabled, owner="headless")
+        except Exception:
+            pass
+
     def update(self) -> None:
+        self._update_city_bonder()
         self._consume_headless_looting_control_messages()
         resurrection_scroll.tick()
         self.cached_data.Update()
@@ -274,6 +294,11 @@ class HeroAIHeadlessTree:
         self.heroai_build.ClearBuildContract()
         self._follow_state = FollowExecutionState()
         self._headless_combat_enabled = True
+        try:
+            from Py4GWCoreLib.Builds.Skills import CityBonderHeroController
+            CityBonderHeroController.reset(owner="headless")
+        except Exception:
+            pass
 
     def _build_tree(self):
         self._looting_node = BehaviorTree.ActionNode(

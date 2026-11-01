@@ -36,17 +36,20 @@ class SpawningPower:
         ))
 
     #region B
-    def Boon_of_Creation(self) -> BuildCoroutine:
+    def Boon_of_Creation(self, *, allow_precast: bool = False) -> BuildCoroutine:
         boon_of_creation_id: int = Skill.GetID("Boon_of_Creation")
-        if not (self.build.IsInAggro() or self.build.IsCloseToAggro()):
+        if not allow_precast and not (self.build.IsInAggro() or self.build.IsCloseToAggro()):
             return False
         return (yield from self._maintain_self_effect(boon_of_creation_id, renew_before_ms=4000))
     #endregion
 
     #region S
-    def Soul_Twisting(self) -> BuildCoroutine:
+    def Soul_Twisting(self, *, allow_precast: bool = False) -> BuildCoroutine:
         soul_twisting_id: int = Skill.GetID("Soul_Twisting")
-        if not (self.build.IsInAggro() or self.build.IsCloseToAggro()):
+        # Stage 2.19 / Astra P1-E: the owning ST rotation may explicitly widen
+        # preparation (including safe Recovery setup) without weakening global
+        # aggro semantics for any other build.
+        if not allow_precast and not (self.build.IsInAggro() or self.build.IsCloseToAggro()):
             return False
         return (yield from self._maintain_self_effect(soul_twisting_id, renew_before_ms=1200))
 

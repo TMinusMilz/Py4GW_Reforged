@@ -1775,17 +1775,34 @@ class CombatClass:
         called_target = self.GetPartyTarget()
         #if Agent.IsAlive(called_target):
         if called_target != 0:
+            if Agent.IsSpirit(called_target):
+                # Spirit can remain a priority for nearby spells, but do not
+                # use automatic Interact() to chase it across the map.
+                self.SafeChangeTarget(called_target)
+                return False
             self.SafeInteract(called_target)
             return True
-            
+
         nearest = Routines.Agents.GetNearestEnemy(self.get_combat_distance())
         if nearest != 0:
+            if Agent.IsSpirit(nearest):
+                self.SafeChangeTarget(nearest)
+                return False
             self.SafeInteract(nearest)
             return True
 
         return False
 
     def HandleAutoAttack(self, cached_data: CacheData | None) -> bool:
+        # Optional Keystone backline guard test.  Keeps spear/shield equipped
+        # without idle attacks, target chasing or resetting the skill pointer.
+        # HR is intentionally excluded: spear attacks fuel Save Yourselves.
+        try:
+            from Py4GWCoreLib.Builds.Skills.SupportGuardSafety import suppress_idle_weapon_attacks
+            if suppress_idle_weapon_attacks():
+                return False
+        except Exception:
+            pass
         if cached_data is None or not self.is_combat_enabled or self.in_casting_routine:
             return False
 
@@ -2123,6 +2140,19 @@ class CombatClass:
         """
         if not ooc:
             self._maybe_call_leader_selected_target(cached_data)
+
+        # Lone hostile spirits are not worth pulling the team off its route.
+        # SafeInteract() issues Player.Interact(), which pathfinds toward the
+        # target even though the lone-spirit scan reaches much farther than
+        # actual casting/weapon range. Do not start pursuit or spend skills.
+        # Dangerous spirits inside a real enemy group still use normal combat.
+        try:
+            from Py4GWCoreLib.Builds.Skills.CombatSense import single_hostile_spirit_cleanup_target
+            if int(single_hostile_spirit_cleanup_target() or 0) > 0:
+                self.ResetSkillPointer()
+                return True  # handled without movement or a forced target
+        except Exception:
+            pass
 
         slot, target_agent_id = self.FindCastableSkill(ooc=ooc)
         if slot < 0:

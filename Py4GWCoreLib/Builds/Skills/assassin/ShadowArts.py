@@ -19,6 +19,17 @@ class ShadowArts:
         self.build: BuildMgr = build
 
     #region D
+    def Deadly_Paradox(self) -> BuildCoroutine:
+        deadly_paradox_id: int = Skill.GetID("Deadly_Paradox")
+        if not self.build.IsSkillEquipped(deadly_paradox_id):
+            return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=deadly_paradox_id,
+            log=False,
+            aftercast_delay=100,
+        ))
+
     def Deaths_Charge(self, *, min_distance: float = 500.0) -> BuildCoroutine:
         """Shadow Step to the most clustered foe, if it is far enough away.
 
@@ -55,6 +66,50 @@ class ShadowArts:
     #endregion
 
     #region S
+    def Shadow_Form(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE
+
+        shadow_form_id: int = Skill.GetID("Shadow_Form")
+        if not self.build.IsSkillEquipped(shadow_form_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if getattr(Routines.Checks.Effects, "HasBuff")(player_agent_id, shadow_form_id):
+            remaining_ms = int(getattr(GLOBAL_CACHE.Effects, "GetEffectTimeRemaining")(
+                player_agent_id,
+                shadow_form_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=shadow_form_id,
+            log=False,
+            aftercast_delay=1950,
+        ))
+
+    def Shroud_of_Distress(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE
+
+        shroud_of_distress_id: int = Skill.GetID("Shroud_of_Distress")
+        if not self.build.IsSkillEquipped(shroud_of_distress_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if getattr(Routines.Checks.Effects, "HasBuff")(player_agent_id, shroud_of_distress_id):
+            remaining_ms = int(getattr(GLOBAL_CACHE.Effects, "GetEffectTimeRemaining")(
+                player_agent_id,
+                shroud_of_distress_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=shroud_of_distress_id,
+            log=False,
+            aftercast_delay=1750,
+        ))
+
     def Shadow_Sanctuary(self) -> BuildCoroutine:
         """Self-cast Shadow Sanctuary while a foe stands within "nearby" range.
 
@@ -81,5 +136,18 @@ class ShadowArts:
             skill_id=shadow_sanctuary_id,
             log=False,
             aftercast_delay=250,
+        ))
+
+    def Unseen_Fury(self) -> BuildCoroutine:
+        unseen_fury_id: int = Skill.GetID("Unseen_Fury")
+        if not self.build.IsSkillEquipped(unseen_fury_id):
+            return False
+        if getattr(Routines.Checks.Effects, "HasBuff")(Player.GetAgentID(), unseen_fury_id):
+            return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=unseen_fury_id,
+            log=False,
+            aftercast_delay=1000,
         ))
     #endregion

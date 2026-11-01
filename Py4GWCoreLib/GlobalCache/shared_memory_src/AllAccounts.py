@@ -19,6 +19,7 @@ from .Globals import (
     SHMEM_MAX_CHAR_LEN,
     SHMEM_MAX_NUMBER_OF_SKILLS,
     SHMEM_MAX_INTENTS,
+    SKILL_BITMAP_ENTRIES,
 )
 
 from .SharedMessageStruct import SharedMessageStruct
@@ -1104,15 +1105,20 @@ class AllAccounts(Structure):
     def _wb_key_display(self, kind_id: int, key_id: int) -> str:
         if int(kind_id) != int(WhiteboardLockKind.SKILL_TARGET):
             return f"key={int(key_id)}"
+        key_id = int(key_id)
+        # Project whiteboard users can store synthetic FourCC-style keys in
+        # the legacy SkillID field. Never pass those to the native skill lookup.
+        if key_id <= 0 or key_id >= int(SKILL_BITMAP_ENTRIES * 32):
+            return f"key=0x{key_id & 0xFFFFFFFF:08X}"
         try:
             from Py4GWCoreLib import GLOBAL_CACHE
-            name = GLOBAL_CACHE.Skill.GetName(int(key_id)) or ""
+            name = GLOBAL_CACHE.Skill.GetName(key_id) or ""
             name = str(name).strip()
             if name:
-                return f"'{name}'(id={int(key_id)})"
+                return f"'{name}'(id={key_id})"
         except Exception:
             pass
-        return f"skill={int(key_id)}"
+        return f"skill={key_id}"
 
     def _wb_lock_display(self, intent: IntentStruct) -> str:
         return (
@@ -1139,11 +1145,12 @@ class AllAccounts(Structure):
         intent = self.Intents[index]
         if intent.Active:
             lifetime = int(PySystem.get_tick_count64()) - int(intent.PostedAtTick)
-            self._wb_log(
-                int(intent.KindID),
-                f"CLEAR slot={index} email='{intent.OwnerEmail}' "
-                f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=explicit",
-            )
+            if WHITEBOARD_DEBUG:
+                self._wb_log(
+                    int(intent.KindID),
+                    f"CLEAR slot={index} email='{intent.OwnerEmail}' "
+                    f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=explicit",
+                )
         intent.reset()
 
     def ClearIntentsByOwner(self, owner_email: str) -> int:
@@ -1156,11 +1163,12 @@ class AllAccounts(Structure):
             intent = self.Intents[i]
             if intent.Active and intent.OwnerEmail == owner_email:
                 lifetime = now - int(intent.PostedAtTick)
-                self._wb_log(
-                    int(intent.KindID),
-                    f"CLEAR slot={i} email='{owner_email}' "
-                    f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=owner_clear",
-                )
+                if WHITEBOARD_DEBUG:
+                    self._wb_log(
+                        int(intent.KindID),
+                        f"CLEAR slot={i} email='{owner_email}' "
+                        f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=owner_clear",
+                    )
                 intent.reset()
                 count += 1
         return count
@@ -1195,11 +1203,12 @@ class AllAccounts(Structure):
             if int(intent.IsolationGroupID) != int(group_id):
                 continue
             lifetime = now - int(intent.PostedAtTick)
-            self._wb_log(
-                int(intent.KindID),
-                f"CLEAR slot={i} email='{owner_email}' "
-                f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=owner_clear",
-            )
+            if WHITEBOARD_DEBUG:
+                self._wb_log(
+                    int(intent.KindID),
+                    f"CLEAR slot={i} email='{owner_email}' "
+                    f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=owner_clear",
+                )
             intent.reset()
             count += 1
         return count
@@ -1252,18 +1261,20 @@ class AllAccounts(Structure):
             intent.ExpiresAtTick = int(expires_at_tick)
             intent.Active = True
             budget = int(expires_at_tick) - now
-            self._wb_log(
-                int(intent.KindID),
-                f"POST  slot={i} email='{owner_email}' "
-                f"{self._wb_lock_display(intent)} holders={int(max_holders)} "
-                f"expires_in={budget}ms",
-            )
+            if WHITEBOARD_DEBUG:
+                self._wb_log(
+                    int(intent.KindID),
+                    f"POST  slot={i} email='{owner_email}' "
+                    f"{self._wb_lock_display(intent)} holders={int(max_holders)} "
+                    f"expires_in={budget}ms",
+                )
             return i
-        self._wb_log(
-            int(kind_id),
-            f"POST-FAIL email='{owner_email}' kind={self._wb_kind_display(kind_id)} "
-            f"key={int(key_id)} target={int(target_id)} reason=full"
-        )
+        if WHITEBOARD_DEBUG:
+            self._wb_log(
+                int(kind_id),
+                f"POST-FAIL email='{owner_email}' kind={self._wb_kind_display(kind_id)} "
+                f"key={int(key_id)} target={int(target_id)} reason=full"
+            )
         return -1
 
     def CountLocks(
@@ -1422,11 +1433,12 @@ class AllAccounts(Structure):
             intent = self.Intents[i]
             if intent.Active and now_tick >= int(intent.ExpiresAtTick):
                 lifetime = int(now_tick) - int(intent.PostedAtTick)
-                self._wb_log(
-                    int(intent.KindID),
-                    f"SWEEP slot={i} email='{intent.OwnerEmail}' "
-                    f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=expired",
-                )
+                if WHITEBOARD_DEBUG:
+                    self._wb_log(
+                        int(intent.KindID),
+                        f"SWEEP slot={i} email='{intent.OwnerEmail}' "
+                        f"{self._wb_lock_display(intent)} lifetime={lifetime}ms reason=expired",
+                    )
                 intent.reset()
                 count += 1
         return count

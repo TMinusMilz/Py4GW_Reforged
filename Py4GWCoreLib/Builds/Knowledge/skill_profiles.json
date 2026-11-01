@@ -1,0 +1,4713 @@
+{
+  "schema_version": 2,
+  "profiles": {
+    "Word_of_Healing": {
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "skill_id": 282,
+      "source": "keysojway_existing",
+      "display_name": "Word of Healing"
+    },
+    "Heal_Party": {
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "skill_id": 287,
+      "source": "keysojway_existing",
+      "display_name": "Heal Party"
+    },
+    "Healing_Burst": {
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "skill_id": 1118,
+      "source": "keysojway_existing",
+      "display_name": "Healing Burst"
+    },
+    "Patient_Spirit": {
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "skill_id": 2061,
+      "source": "keysojway_existing",
+      "display_name": "Patient Spirit"
+    },
+    "Spirit_Light": {
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 96,
+      "skill_id": 915,
+      "source": "keysojway_existing",
+      "display_name": "Spirit Light"
+    },
+    "Mend_Body_and_Soul": {
+      "categories": [
+        "condition_removal",
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "skill_id": 1234,
+      "source": "keysojway_existing",
+      "display_name": "Mend Body and Soul"
+    },
+    "Protective_Spirit": {
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 245,
+      "source": "keysojway_existing",
+      "display_name": "Protective Spirit"
+    },
+    "Spirit_Bond": {
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 1114,
+      "source": "keysojway_existing",
+      "display_name": "Spirit Bond"
+    },
+    "Aegis": {
+      "categories": [
+        "hard_protection",
+        "party_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 257,
+      "source": "keysojway_existing",
+      "display_name": "Aegis"
+    },
+    "Life_Sheath": {
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 1123,
+      "source": "keysojway_existing",
+      "display_name": "Life Sheath"
+    },
+    "Shelter": {
+      "categories": [
+        "hard_protection",
+        "protection",
+        "spirit"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 982,
+      "source": "keysojway_existing",
+      "display_name": "Shelter"
+    },
+    "Union": {
+      "categories": [
+        "hard_protection",
+        "protection",
+        "spirit"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 911,
+      "source": "keysojway_existing",
+      "display_name": "Union"
+    },
+    "Displacement": {
+      "categories": [
+        "hard_protection",
+        "protection",
+        "spirit"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "skill_id": 1249,
+      "source": "keysojway_existing",
+      "display_name": "Displacement"
+    },
+    "Recuperation": {
+      "categories": [
+        "heal",
+        "protection",
+        "spirit"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "skill_id": 981,
+      "source": "keysojway_existing",
+      "display_name": "Recuperation"
+    },
+    "Resurrection_Chant": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 1128,
+      "source": "keysojway_existing",
+      "display_name": "Resurrection Chant"
+    },
+    "Restore_Life": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 314,
+      "source": "keysojway_existing",
+      "display_name": "Restore Life"
+    },
+    "Rebirth": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 306,
+      "source": "keysojway_existing",
+      "display_name": "Rebirth"
+    },
+    "Flesh_of_My_Flesh": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 791,
+      "source": "keysojway_existing",
+      "display_name": "Flesh of My Flesh"
+    },
+    "Death_Pact_Signet": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 1481,
+      "source": "keysojway_existing",
+      "display_name": "Death Pact Signet"
+    },
+    "Renew_Life": {
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 120,
+      "interrupt_priority": 120,
+      "skill_id": 1263,
+      "source": "keysojway_existing",
+      "display_name": "Renew Life"
+    },
+    "Meteor_Shower": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "knockdown",
+        "lethal_aoe"
+      ],
+      "threat": 115,
+      "interrupt_priority": 118,
+      "requires_escape": true,
+      "skill_id": 192,
+      "source": "keysojway_existing",
+      "display_name": "Meteor Shower"
+    },
+    "Savannah_Heat": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 108,
+      "interrupt_priority": 110,
+      "requires_escape": true,
+      "skill_id": 1380,
+      "source": "keysojway_existing",
+      "display_name": "Savannah Heat"
+    },
+    "Searing_Heat": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "requires_escape": true,
+      "skill_id": 196,
+      "source": "keysojway_existing",
+      "display_name": "Searing Heat"
+    },
+    "Ray_of_Judgment": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 110,
+      "interrupt_priority": 114,
+      "requires_escape": true,
+      "skill_id": 830,
+      "source": "keysojway_existing",
+      "display_name": "Ray of Judgment"
+    },
+    "Panic": {
+      "categories": [
+        "dangerous_offense",
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 112,
+      "interrupt_priority": 116,
+      "skill_id": 52,
+      "source": "keysojway_existing",
+      "display_name": "Panic"
+    },
+    "Energy_Surge": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 108,
+      "skill_id": 39,
+      "source": "keysojway_existing",
+      "display_name": "Energy Surge"
+    },
+    "Cry_of_Frustration": {
+      "categories": [
+        "dangerous_offense",
+        "shutdown"
+      ],
+      "threat": 105,
+      "interrupt_priority": 110,
+      "skill_id": 57,
+      "source": "keysojway_existing",
+      "display_name": "Cry of Frustration"
+    },
+    "Mistrust": {
+      "categories": [
+        "dangerous_offense",
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 98,
+      "skill_id": 979,
+      "source": "keysojway_existing",
+      "display_name": "Mistrust"
+    },
+    "Spiteful_Spirit": {
+      "categories": [
+        "dangerous_offense",
+        "hex",
+        "packet_pressure"
+      ],
+      "threat": 102,
+      "interrupt_priority": 104,
+      "skill_id": 121,
+      "source": "keysojway_existing",
+      "display_name": "Spiteful Spirit"
+    },
+    "Mark_of_Pain": {
+      "categories": [
+        "aoe",
+        "dangerous_offense",
+        "hex",
+        "packet_pressure"
+      ],
+      "threat": 110,
+      "interrupt_priority": 112,
+      "skill_id": 150,
+      "source": "keysojway_existing",
+      "display_name": "Mark of Pain"
+    },
+    "Barbs": {
+      "categories": [
+        "dangerous_offense",
+        "hex",
+        "pressure"
+      ],
+      "threat": 94,
+      "interrupt_priority": 96,
+      "skill_id": 101,
+      "source": "keysojway_existing",
+      "display_name": "Barbs"
+    },
+    "Resurrection_Signet": {
+      "skill_id": 2,
+      "display_name": "Resurrection Signet",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Light_of_Dwayna": {
+      "skill_id": 304,
+      "display_name": "Light of Dwayna",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Unyielding_Aura": {
+      "skill_id": 268,
+      "display_name": "Unyielding Aura",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Vengeance": {
+      "skill_id": 315,
+      "display_name": "Vengeance",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Signet_of_Return": {
+      "skill_id": 1778,
+      "display_name": "Signet of Return",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Sunspear_Rebirth_Signet": {
+      "skill_id": 1816,
+      "display_name": "Sunspear Rebirth Signet",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Teinais_Heat": {
+      "skill_id": 1093,
+      "display_name": "Teinai's Heat",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Bed_of_Coals": {
+      "skill_id": 825,
+      "display_name": "Bed of Coals",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Fire_Storm": {
+      "skill_id": 197,
+      "display_name": "Fire Storm",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Maelstrom": {
+      "skill_id": 215,
+      "display_name": "Maelstrom",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Churning_Earth": {
+      "skill_id": 844,
+      "display_name": "Churning Earth",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Sandstorm": {
+      "skill_id": 1372,
+      "display_name": "Sandstorm",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Eruption": {
+      "skill_id": 167,
+      "display_name": "Eruption",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Deep_Freeze": {
+      "skill_id": 234,
+      "display_name": "Deep Freeze",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Earthquake": {
+      "skill_id": 170,
+      "display_name": "Earthquake",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Dragons_Stomp": {
+      "skill_id": 1086,
+      "display_name": "Dragon's Stomp",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Unsteady_Ground": {
+      "skill_id": 1083,
+      "display_name": "Unsteady Ground",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shockwave": {
+      "skill_id": 937,
+      "display_name": "Shockwave",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Spirit_Rift": {
+      "skill_id": 910,
+      "display_name": "Spirit Rift",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Rodgorts_Invocation": {
+      "skill_id": 189,
+      "display_name": "Rodgort's Invocation",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 106,
+      "interrupt_priority": 106,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Invoke_Lightning": {
+      "skill_id": 1664,
+      "display_name": "Invoke Lightning",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Chain_Lightning": {
+      "skill_id": 223,
+      "display_name": "Chain Lightning",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Obsidian_Flame": {
+      "skill_id": 219,
+      "display_name": "Obsidian Flame",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Mind_Burn": {
+      "skill_id": 185,
+      "display_name": "Mind Burn",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Mind_Freeze": {
+      "skill_id": 209,
+      "display_name": "Mind Freeze",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shatterstone": {
+      "skill_id": 809,
+      "display_name": "Shatterstone",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Thunderclap": {
+      "skill_id": 228,
+      "display_name": "Thunderclap",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Stoning": {
+      "skill_id": 171,
+      "display_name": "Stoning",
+      "categories": [
+        "dangerous_offense",
+        "lethal_aoe"
+      ],
+      "threat": 101,
+      "interrupt_priority": 101,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shield_of_Absorption": {
+      "skill_id": 1399,
+      "display_name": "Shield of Absorption",
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Mark_of_Protection": {
+      "skill_id": 269,
+      "display_name": "Mark of Protection",
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Aura_of_Stability": {
+      "skill_id": 2063,
+      "display_name": "Aura of Stability",
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Protective_Was_Kaolai": {
+      "skill_id": 1219,
+      "display_name": "Protective Was Kaolai",
+      "categories": [
+        "hard_protection",
+        "protection"
+      ],
+      "threat": 102,
+      "interrupt_priority": 102,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Guardian": {
+      "skill_id": 258,
+      "display_name": "Guardian",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shielding_Hands": {
+      "skill_id": 299,
+      "display_name": "Shielding Hands",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Protective_Bond": {
+      "skill_id": 263,
+      "display_name": "Protective Bond",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Life_Barrier": {
+      "skill_id": 270,
+      "display_name": "Life Barrier",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Life_Bond": {
+      "skill_id": 241,
+      "display_name": "Life Bond",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Reversal_of_Fortune": {
+      "skill_id": 307,
+      "display_name": "Reversal of Fortune",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shield_Guardian": {
+      "skill_id": 885,
+      "display_name": "Shield Guardian",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Weapon_of_Warding": {
+      "skill_id": 793,
+      "display_name": "Weapon of Warding",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Weapon_of_Shadow": {
+      "skill_id": 983,
+      "display_name": "Weapon of Shadow",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Xinraes_Weapon": {
+      "skill_id": 1750,
+      "display_name": "Xinrae's Weapon",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Weapon_of_Remedy": {
+      "skill_id": 1752,
+      "display_name": "Weapon of Remedy",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Preservation": {
+      "skill_id": 1250,
+      "display_name": "Preservation",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Recovery": {
+      "skill_id": 1748,
+      "display_name": "Recovery",
+      "categories": [
+        "protection"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Light_of_Deliverance": {
+      "skill_id": 1397,
+      "display_name": "Light of Deliverance",
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Divine_Healing": {
+      "skill_id": 279,
+      "display_name": "Divine Healing",
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Heavens_Delight": {
+      "skill_id": 1117,
+      "display_name": "Heaven's Delight",
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Kareis_Healing_Circle": {
+      "skill_id": 1119,
+      "display_name": "Karei's Healing Circle",
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 100,
+      "interrupt_priority": 100,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Infuse_Health": {
+      "skill_id": 292,
+      "display_name": "Infuse Health",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Spirit_Transfer": {
+      "skill_id": 962,
+      "display_name": "Spirit Transfer",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Restore_Condition": {
+      "skill_id": 276,
+      "display_name": "Restore Condition",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Healing_Seed": {
+      "skill_id": 274,
+      "display_name": "Healing Seed",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Seed_of_Life": {
+      "skill_id": 2105,
+      "display_name": "Seed of Life",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Gift_of_Health": {
+      "skill_id": 1121,
+      "display_name": "Gift of Health",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Jameis_Gaze": {
+      "skill_id": 1120,
+      "display_name": "Jamei's Gaze",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ethereal_Light": {
+      "skill_id": 959,
+      "display_name": "Ethereal Light",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Healing_Ribbon": {
+      "skill_id": 2062,
+      "display_name": "Healing Ribbon",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Healing_Light": {
+      "skill_id": 867,
+      "display_name": "Healing Light",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Dwaynas_Kiss": {
+      "skill_id": 283,
+      "display_name": "Dwayna's Kiss",
+      "categories": [
+        "heal",
+        "major_heal"
+      ],
+      "threat": 94,
+      "interrupt_priority": 94,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Orison_of_Healing": {
+      "skill_id": 281,
+      "display_name": "Orison of Healing",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Heal_Other": {
+      "skill_id": 286,
+      "display_name": "Heal Other",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Healing_Touch": {
+      "skill_id": 313,
+      "display_name": "Healing Touch",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Heal_Area": {
+      "skill_id": 280,
+      "display_name": "Heal Area",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Mend_Condition": {
+      "skill_id": 275,
+      "display_name": "Mend Condition",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Mend_Ailment": {
+      "skill_id": 277,
+      "display_name": "Mend Ailment",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Convert_Hexes": {
+      "skill_id": 303,
+      "display_name": "Convert Hexes",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Deny_Hexes": {
+      "skill_id": 991,
+      "display_name": "Deny Hexes",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Purge_Signet": {
+      "skill_id": 295,
+      "display_name": "Purge Signet",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Soothing_Memories": {
+      "skill_id": 1233,
+      "display_name": "Soothing Memories",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Wielders_Boon": {
+      "skill_id": 1265,
+      "display_name": "Wielder's Boon",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Generous_Was_Tsungrai": {
+      "skill_id": 772,
+      "display_name": "Generous Was Tsungrai",
+      "categories": [
+        "heal",
+        "heal_cleanse"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Power_Block": {
+      "skill_id": 5,
+      "display_name": "Power Block",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Psychic_Instability": {
+      "skill_id": 1057,
+      "display_name": "Psychic Instability",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Broad_Head_Arrow": {
+      "skill_id": 1198,
+      "display_name": "Broad Head Arrow",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Dissonance": {
+      "skill_id": 921,
+      "display_name": "Dissonance",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Wanderlust": {
+      "skill_id": 1255,
+      "display_name": "Wanderlust",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Frozen_Soil": {
+      "skill_id": 471,
+      "display_name": "Frozen Soil",
+      "categories": [
+        "hard_shutdown",
+        "shutdown"
+      ],
+      "threat": 104,
+      "interrupt_priority": 104,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Diversion": {
+      "skill_id": 30,
+      "display_name": "Diversion",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shame": {
+      "skill_id": 51,
+      "display_name": "Shame",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Backfire": {
+      "skill_id": 28,
+      "display_name": "Backfire",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Migraine": {
+      "skill_id": 53,
+      "display_name": "Migraine",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Complicate": {
+      "skill_id": 932,
+      "display_name": "Complicate",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Hex_Eater_Vortex": {
+      "skill_id": 1348,
+      "display_name": "Hex Eater Vortex",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Visions_of_Regret": {
+      "skill_id": 878,
+      "display_name": "Visions of Regret",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shared_Burden": {
+      "skill_id": 900,
+      "display_name": "Shared Burden",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Frustration": {
+      "skill_id": 1341,
+      "display_name": "Frustration",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Power_Leak": {
+      "skill_id": 24,
+      "display_name": "Power Leak",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Power_Drain": {
+      "skill_id": 25,
+      "display_name": "Power Drain",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Leech_Signet": {
+      "skill_id": 61,
+      "display_name": "Leech Signet",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ineptitude": {
+      "skill_id": 47,
+      "display_name": "Ineptitude",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Clumsiness": {
+      "skill_id": 43,
+      "display_name": "Clumsiness",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Wandering_Eye": {
+      "skill_id": 2056,
+      "display_name": "Wandering Eye",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Empathy": {
+      "skill_id": 26,
+      "display_name": "Empathy",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Arcane_Conundrum": {
+      "skill_id": 36,
+      "display_name": "Arcane Conundrum",
+      "categories": [
+        "shutdown"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Spoil_Victor": {
+      "skill_id": 1066,
+      "display_name": "Spoil Victor",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Feast_of_Corruption": {
+      "skill_id": 151,
+      "display_name": "Feast of Corruption",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Rising_Bile": {
+      "skill_id": 935,
+      "display_name": "Rising Bile",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Putrid_Explosion": {
+      "skill_id": 95,
+      "display_name": "Putrid Explosion",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Discord": {
+      "skill_id": 817,
+      "display_name": "Discord",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Soul_Barbs": {
+      "skill_id": 100,
+      "display_name": "Soul Barbs",
+      "categories": [
+        "dangerous_offense",
+        "packet_pressure"
+      ],
+      "threat": 93,
+      "interrupt_priority": 93,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Insidious_Parasite": {
+      "skill_id": 123,
+      "display_name": "Insidious Parasite",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Defile_Defenses": {
+      "skill_id": 2188,
+      "display_name": "Defile Defenses",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Enfeebling_Blood": {
+      "skill_id": 118,
+      "display_name": "Enfeebling Blood",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Weaken_Armor": {
+      "skill_id": 159,
+      "display_name": "Weaken Armor",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Price_of_Failure": {
+      "skill_id": 103,
+      "display_name": "Price of Failure",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Reckless_Haste": {
+      "skill_id": 834,
+      "display_name": "Reckless Haste",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Tainted_Flesh": {
+      "skill_id": 113,
+      "display_name": "Tainted Flesh",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Order_of_Pain": {
+      "skill_id": 134,
+      "display_name": "Order of Pain",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Order_of_the_Vampire": {
+      "skill_id": 148,
+      "display_name": "Order of the Vampire",
+      "categories": [
+        "dangerous_offense",
+        "pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Signet_of_Judgment": {
+      "skill_id": 294,
+      "display_name": "Signet of Judgment",
+      "categories": [
+        "control",
+        "dangerous_offense"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shield_of_Judgment": {
+      "skill_id": 262,
+      "display_name": "Shield of Judgment",
+      "categories": [
+        "control",
+        "dangerous_offense"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Gale": {
+      "skill_id": 162,
+      "display_name": "Gale",
+      "categories": [
+        "control",
+        "dangerous_offense"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Bane_Signet": {
+      "skill_id": 296,
+      "display_name": "Bane Signet",
+      "categories": [
+        "control",
+        "dangerous_offense"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Signet_of_Spirits": {
+      "skill_id": 1239,
+      "display_name": "Signet of Spirits",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Pain": {
+      "skill_id": 1247,
+      "display_name": "Pain",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Bloodsong": {
+      "skill_id": 1253,
+      "display_name": "Bloodsong",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Shadowsong": {
+      "skill_id": 871,
+      "display_name": "Shadowsong",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Anguish": {
+      "skill_id": 1745,
+      "display_name": "Anguish",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Destruction": {
+      "skill_id": 920,
+      "display_name": "Destruction",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Doom": {
+      "skill_id": 1264,
+      "display_name": "Doom",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Clamor_of_Souls": {
+      "skill_id": 1215,
+      "display_name": "Clamor of Souls",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Caretakers_Charge": {
+      "skill_id": 1744,
+      "display_name": "Caretaker's Charge",
+      "categories": [
+        "dangerous_offense",
+        "spirit_pressure"
+      ],
+      "threat": 90,
+      "interrupt_priority": 90,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Edge_of_Extinction": {
+      "skill_id": 464,
+      "display_name": "Edge of Extinction",
+      "categories": [
+        "nature_ritual"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Greater_Conflagration": {
+      "skill_id": 465,
+      "display_name": "Greater Conflagration",
+      "categories": [
+        "nature_ritual"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Symbol_of_Wrath": {
+      "skill_id": 247,
+      "display_name": "Symbol of Wrath",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Scourge_Healing": {
+      "skill_id": 251,
+      "display_name": "Scourge Healing",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Balthazars_Aura": {
+      "skill_id": 272,
+      "display_name": "Balthazar's Aura",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ancestors_Rage": {
+      "skill_id": 1246,
+      "display_name": "Ancestors' Rage",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Sliver_Armor": {
+      "skill_id": 1084,
+      "display_name": "Sliver Armor",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ward_Against_Harm": {
+      "skill_id": 239,
+      "display_name": "Ward Against Harm",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ward_Against_Melee": {
+      "skill_id": 176,
+      "display_name": "Ward Against Melee",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ward_Against_Foes": {
+      "skill_id": 177,
+      "display_name": "Ward Against Foes",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Ward_Against_Elements": {
+      "skill_id": 175,
+      "display_name": "Ward Against Elements",
+      "categories": [
+        "dangerous_offense",
+        "medium_pressure"
+      ],
+      "threat": 72,
+      "interrupt_priority": 72,
+      "source": "DangerousSkillPriorities_existing_team_policy"
+    },
+    "Call_to_the_Torment": {
+      "skill_id": 1454,
+      "categories": [
+        "dangerous_offense",
+        "duplication"
+      ],
+      "threat": 118,
+      "interrupt_priority": 0,
+      "interruptible": false,
+      "keysojway_risk": "critical_if_user_below_50_percent",
+      "recommended_response": "focus_kill_during_5s_kneel; do_not_reserve_interrupt",
+      "display_name": "Call to the Torment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Wave_of_Torment": {
+      "skill_id": 1430,
+      "categories": [
+        "dangerous_offense",
+        "mission_boss_pressure"
+      ],
+      "threat": 112,
+      "interrupt_priority": 116,
+      "interruptible": true,
+      "keysojway_risk": "high",
+      "recommended_response": "PI/Cry/Complicate interrupt if feasible",
+      "display_name": "Wave of Torment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Abaddons_Chosen": {
+      "skill_id": 1457,
+      "categories": [
+        "hard_protection",
+        "monster_support"
+      ],
+      "threat": 110,
+      "interrupt_priority": 115,
+      "interruptible": true,
+      "keysojway_risk": "high",
+      "recommended_response": "interrupt; otherwise switch damage until invulnerability ends",
+      "display_name": "Abaddon's Chosen",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Enchantment_Collapse": {
+      "skill_id": 1458,
+      "categories": [
+        "dangerous_offense",
+        "enchantment_punish"
+      ],
+      "threat": 112,
+      "interrupt_priority": 116,
+      "keysojway_risk": "high",
+      "recommended_response": "interrupt when feasible; avoid stacking unnecessary enchantments",
+      "display_name": "Enchantment Collapse",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Enemies_Must_Die": {
+      "skill_id": 1460,
+      "categories": [
+        "dangerous_offense",
+        "focus_call"
+      ],
+      "threat": 108,
+      "interrupt_priority": 0,
+      "interruptible": false,
+      "keysojway_risk": "high_to_low_hp_ally",
+      "recommended_response": "heal/protect focused ally and kill Varesh/torment pressure",
+      "display_name": "Enemies Must Die!",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Earth_Vortex": {
+      "skill_id": 1461,
+      "categories": [
+        "dangerous_offense",
+        "aoe"
+      ],
+      "threat": 114,
+      "interrupt_priority": 118,
+      "requires_escape": true,
+      "keysojway_risk": "critical_aoe",
+      "recommended_response": "interrupt or escape/spread",
+      "display_name": "Earth Vortex",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Frost_Vortex": {
+      "skill_id": 1462,
+      "categories": [
+        "dangerous_offense",
+        "aoe"
+      ],
+      "threat": 114,
+      "interrupt_priority": 118,
+      "requires_escape": true,
+      "keysojway_risk": "critical_aoe",
+      "recommended_response": "interrupt or escape/spread",
+      "display_name": "Frost Vortex",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Earth_Shattering_Blow": {
+      "skill_id": 1705,
+      "categories": [
+        "dangerous_offense",
+        "aoe",
+        "knockdown"
+      ],
+      "threat": 120,
+      "interrupt_priority": 0,
+      "interruptible": false,
+      "keysojway_risk": "critical_arena_control",
+      "recommended_response": "pre-protect/heal; respect knockdown timing",
+      "display_name": "Earth Shattering Blow",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Corrupt_Power": {
+      "skill_id": 1706,
+      "categories": [
+        "dangerous_offense"
+      ],
+      "threat": 105,
+      "interrupt_priority": 0,
+      "interruptible": false,
+      "keysojway_risk": "high_boss_pressure",
+      "recommended_response": "maintain pressure on Abaddon and recover quickly",
+      "display_name": "Corrupt Power",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Words_of_Madness": {
+      "skill_id": 1875,
+      "categories": [
+        "dangerous_offense",
+        "aoe",
+        "hard_shutdown",
+        "daze",
+        "knockdown"
+      ],
+      "threat": 125,
+      "interrupt_priority": 0,
+      "interruptible": false,
+      "keysojway_risk": "critical_arena_wide",
+      "recommended_response": "pre-protect; prioritize post-hit recovery and casting stability",
+      "display_name": "Words of Madness",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Shadow_Smash": {
+      "skill_id": 1882,
+      "categories": [
+        "dangerous_offense",
+        "spike"
+      ],
+      "threat": 112,
+      "interrupt_priority": 0,
+      "keysojway_risk": "critical_boss_spike",
+      "recommended_response": "spread/recover; maintain ST protection",
+      "display_name": "Shadow Smash",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Consume_Torment": {
+      "skill_id": 1884,
+      "categories": [
+        "heal",
+        "cleanse",
+        "boss_recovery"
+      ],
+      "threat": 118,
+      "interrupt_priority": 0,
+      "keysojway_risk": "critical_boss_heal",
+      "recommended_response": "avoid feeding excess hex/condition stacks; burst between cleanses",
+      "display_name": "Consume Torment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Banish_Enchantment": {
+      "skill_id": 1885,
+      "categories": [
+        "shutdown",
+        "enchantment_removal"
+      ],
+      "threat": 116,
+      "interrupt_priority": 0,
+      "keysojway_risk": "critical_enchantment_punish",
+      "recommended_response": "avoid enchantment stacking; protect critical chains",
+      "display_name": "Banish Enchantment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Summoning_Shadows": {
+      "skill_id": 1886,
+      "categories": [
+        "shutdown",
+        "reposition"
+      ],
+      "threat": 108,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_reposition",
+      "recommended_response": "regroup immediately; re-establish ST coverage",
+      "display_name": "Summoning Shadows",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Repressive_Energy": {
+      "skill_id": 1889,
+      "categories": [
+        "environment",
+        "energy_denial"
+      ],
+      "threat": 110,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_for_mesmer_and_roj_energy",
+      "recommended_response": "energy-aware casting; avoid waste/filler",
+      "display_name": "Repressive Energy",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Enduring_Torment": {
+      "skill_id": 1890,
+      "categories": [
+        "environment",
+        "movement_punish"
+      ],
+      "threat": 108,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_if_kiting",
+      "recommended_response": "minimize unnecessary movement; move decisively",
+      "display_name": "Enduring Torment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Shroud_of_Darkness": {
+      "skill_id": 1891,
+      "categories": [
+        "environment",
+        "physical_mitigation"
+      ],
+      "threat": 92,
+      "interrupt_priority": 0,
+      "keysojway_risk": "moderate",
+      "recommended_response": "favor spell/signets over physical reliance",
+      "display_name": "Shroud of Darkness",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Demonic_Miasma": {
+      "skill_id": 1892,
+      "categories": [
+        "environment",
+        "block_punish"
+      ],
+      "threat": 108,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_if_block_heavy",
+      "recommended_response": "avoid unnecessary block/dodge stacking",
+      "display_name": "Demonic Miasma",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Enraged": {
+      "skill_id": 1893,
+      "categories": [
+        "dangerous_offense",
+        "execute_pressure"
+      ],
+      "threat": 102,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_at_low_enemy_hp",
+      "recommended_response": "finish low-health targets quickly",
+      "display_name": "Enraged",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Wild_Smash": {
+      "skill_id": 1895,
+      "categories": [
+        "shutdown",
+        "stance_break"
+      ],
+      "threat": 96,
+      "interrupt_priority": 0,
+      "keysojway_risk": "moderate",
+      "recommended_response": "do not depend on stances against Mallyx",
+      "display_name": "Wild Smash",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Unyielding_Anguish": {
+      "skill_id": 1896,
+      "categories": [
+        "resurrection",
+        "environment_spirit"
+      ],
+      "threat": 120,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high",
+      "recommended_response": "deny revived environmental spirit by boss pressure",
+      "display_name": "Unyielding Anguish",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Jadoths_Storm_of_Judgment": {
+      "skill_id": 1897,
+      "categories": [
+        "dangerous_offense",
+        "aoe",
+        "knockdown"
+      ],
+      "threat": 120,
+      "interrupt_priority": 124,
+      "requires_escape": true,
+      "keysojway_risk": "critical_aoe",
+      "recommended_response": "interrupt/escape; high priority",
+      "display_name": "Jadoth's Storm of Judgment",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Natural_Resistance": {
+      "skill_id": 547,
+      "categories": [
+        "boss_defense",
+        "passive"
+      ],
+      "threat": 80,
+      "interrupt_priority": 0,
+      "keysojway_risk": "boss_resistance",
+      "recommended_response": "expect reduced condition/hex/control reliability",
+      "display_name": "Natural Resistance",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Battle_Scars": {
+      "skill_id": 1274,
+      "categories": [
+        "dangerous_offense",
+        "self_sustain"
+      ],
+      "threat": 103,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_shiro_sustain",
+      "recommended_response": "maintain concentrated pressure",
+      "display_name": "Battle Scars",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Impossible_Odds": {
+      "skill_id": 1273,
+      "categories": [
+        "dangerous_offense",
+        "multi_attack"
+      ],
+      "threat": 108,
+      "interrupt_priority": 0,
+      "keysojway_risk": "high_physical_spike",
+      "recommended_response": "ST protection and blind/mitigation if available",
+      "display_name": "Impossible Odds",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Riposting_Shadows": {
+      "skill_id": 1275,
+      "categories": [
+        "reposition",
+        "boss_defense"
+      ],
+      "threat": 88,
+      "interrupt_priority": 0,
+      "keysojway_risk": "moderate",
+      "recommended_response": "reacquire focus after shadow step",
+      "display_name": "Riposting Shadows",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Soul_Torture": {
+      "skill_id": 1718,
+      "categories": [
+        "mission_mechanic"
+      ],
+      "threat": 10,
+      "interrupt_priority": 0,
+      "interruptible": true,
+      "keysojway_risk": "do_not_waste_interrupt",
+      "recommended_response": "do not reserve PI/Cry/Complicate for this cast",
+      "display_name": "Soul Torture",
+      "source": "Nightfall/Guild Wars Wiki + Apo skill-id catalog"
+    },
+    "Spell_Breaker": {
+      "skill_id": 273,
+      "display_name": "Spell Breaker",
+      "categories": [
+        "hard_protection",
+        "spell_denial"
+      ],
+      "threat": 108,
+      "interrupt_priority": 112,
+      "source": "Nightfall RC2: Guild Wars Wiki Margonite Cleric profile + live map/model identity"
+    },
+    "Divine_Intervention": {
+      "skill_id": 246,
+      "display_name": "Divine Intervention",
+      "categories": [
+        "hard_protection",
+        "heal"
+      ],
+      "threat": 96,
+      "interrupt_priority": 96,
+      "source": "Nightfall RC2: Guild Wars Wiki Margonite Cleric profile + live map/model identity"
+    },
+    "Mirror_of_Disenchantment": {
+      "skill_id": 1349,
+      "display_name": "Mirror of Disenchantment",
+      "categories": [
+        "shutdown",
+        "enchantment_removal"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "Nightfall RC2: Guild Wars Wiki Margonite Seer profile + live map/model identity"
+    },
+    "Energy_Drain": {
+      "skill_id": 79,
+      "display_name": "Energy Drain",
+      "categories": [
+        "shutdown",
+        "energy_denial"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "Nightfall RC2: Guild Wars Wiki Margonite Seer profile + live map/model identity"
+    },
+    "Corrupt_Enchantment": {
+      "skill_id": 1362,
+      "display_name": "Corrupt Enchantment",
+      "categories": [
+        "dangerous_offense",
+        "enchantment_removal"
+      ],
+      "threat": 92,
+      "interrupt_priority": 92,
+      "source": "Nightfall RC2: Guild Wars Wiki Margonite Warlock profile + live map/model identity"
+    },
+    "Power_Flux": {
+      "skill_id": 953,
+      "display_name": "Power Flux",
+      "categories": [
+        "shutdown",
+        "energy_denial"
+      ],
+      "threat": 96,
+      "interrupt_priority": 98,
+      "source": "Nightfall RC2: Guild Wars Wiki Herald of Nightmares profile + live map/model identity"
+    },
+    "Shatter_Enchantment": {
+      "skill_id": 69,
+      "display_name": "Shatter Enchantment",
+      "categories": [
+        "dangerous_offense",
+        "enchantment_removal"
+      ],
+      "threat": 84,
+      "interrupt_priority": 84,
+      "source": "Nightfall RC2: Guild Wars Wiki Herald of Nightmares profile + live map/model identity"
+    },
+    "Ballad_of_Restoration": {
+      "skill_id": 1564,
+      "display_name": "Ballad of Restoration",
+      "categories": [
+        "heal",
+        "party_heal"
+      ],
+      "threat": 88,
+      "interrupt_priority": 88,
+      "source": "Nightfall RC2: Guild Wars Wiki Spear of Torment profile + live map/model identity"
+    },
+    "Jagged_Bones": {
+      "skill_id": 1355,
+      "display_name": "Jagged Bones",
+      "categories": [
+        "dangerous_offense",
+        "minion_pressure"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "Nightfall RC2: Guild Wars Wiki Shadow of Fear profile + live map/model identity"
+    },
+    "Jagged_Strike": {
+      "skill_id": 782,
+      "display_name": "Jagged Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Beguiling_Haze": {
+      "skill_id": 799,
+      "display_name": "Beguiling Haze",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Repeating_Strike": {
+      "skill_id": 976,
+      "display_name": "Repeating Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Wild_Strike": {
+      "skill_id": 1022,
+      "display_name": "Wild Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Way_of_Perfection": {
+      "skill_id": 1028,
+      "display_name": "Way of Perfection",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Inferno": {
+      "skill_id": 183,
+      "display_name": "Inferno",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Immolate": {
+      "skill_id": 191,
+      "display_name": "Immolate",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Obsidian_Flesh": {
+      "skill_id": 218,
+      "display_name": "Obsidian Flesh",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lava_Arrows": {
+      "skill_id": 824,
+      "display_name": "Lava Arrows",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Conjure_Phantasm": {
+      "skill_id": 31,
+      "display_name": "Conjure Phantasm",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Ether_Feast": {
+      "skill_id": 40,
+      "display_name": "Ether Feast",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Echo": {
+      "skill_id": 74,
+      "display_name": "Echo",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Irresistible_Blow": {
+      "skill_id": 356,
+      "display_name": "Irresistible Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Parasitic_Bond": {
+      "skill_id": 99,
+      "display_name": "Parasitic Bond",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Rigor_Mortis": {
+      "skill_id": 137,
+      "display_name": "Rigor Mortis",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Rend_Enchantments": {
+      "skill_id": 141,
+      "display_name": "Rend Enchantments",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Aura_of_Restoration": {
+      "skill_id": 180,
+      "display_name": "Aura of Restoration",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Ward_of_Stability": {
+      "skill_id": 938,
+      "display_name": "Ward of Stability",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Ash_Blast": {
+      "skill_id": 1085,
+      "display_name": "Ash Blast",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Axe_Rake": {
+      "skill_id": 334,
+      "display_name": "Axe Rake",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Executioner_s_Strike": {
+      "skill_id": 336,
+      "display_name": "Executioner's Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dismember": {
+      "skill_id": 337,
+      "display_name": "Dismember",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Disrupting_Chop": {
+      "skill_id": 340,
+      "display_name": "Disrupting Chop",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lamentation": {
+      "skill_id": 916,
+      "display_name": "Lamentation",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spirit_Boon_Strike": {
+      "skill_id": 1226,
+      "display_name": "Spirit Boon Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dwayna_s_Sorrow": {
+      "skill_id": 838,
+      "display_name": "Dwayna's Sorrow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Siphon_Strength": {
+      "skill_id": 827,
+      "display_name": "Siphon Strength",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Siphon_Speed": {
+      "skill_id": 951,
+      "display_name": "Siphon Speed",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Expunge_Enchantments": {
+      "skill_id": 990,
+      "display_name": "Expunge Enchantments",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Disenchantment": {
+      "skill_id": 923,
+      "display_name": "Disenchantment",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Binding_Chains": {
+      "skill_id": 1236,
+      "display_name": "Binding Chains",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Soothing": {
+      "skill_id": 1266,
+      "display_name": "Soothing",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Healing_Signet": {
+      "skill_id": 1,
+      "display_name": "Healing Signet",
+      "categories": [
+        "heal",
+        "self_heal"
+      ],
+      "threat": 65,
+      "interrupt_priority": 65,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Counter_Blow": {
+      "skill_id": 357,
+      "display_name": "Counter Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Heavy_Blow": {
+      "skill_id": 359,
+      "display_name": "Heavy Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Staggering_Blow": {
+      "skill_id": 360,
+      "display_name": "Staggering Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Yeti_Smash": {
+      "skill_id": 1137,
+      "display_name": "Yeti Smash",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Charm_Animal_monster_skill": {
+      "skill_id": 513,
+      "display_name": "Charm_Animal_monster_skill",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Snare": {
+      "skill_id": 854,
+      "display_name": "Snare",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Trapper_s_Focus": {
+      "skill_id": 946,
+      "display_name": "Trapper's Focus",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Viper_s_Nest": {
+      "skill_id": 1211,
+      "display_name": "Viper's Nest",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Consume_Soul": {
+      "skill_id": 914,
+      "display_name": "Consume Soul",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vengeful_Weapon": {
+      "skill_id": 964,
+      "display_name": "Vengeful Weapon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Brutal_Weapon": {
+      "skill_id": 1258,
+      "display_name": "Brutal Weapon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vampiric_Gaze": {
+      "skill_id": 153,
+      "display_name": "Vampiric Gaze",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Weaken_Knees": {
+      "skill_id": 822,
+      "display_name": "Weaken Knees",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Fetid_Ground": {
+      "skill_id": 841,
+      "display_name": "Fetid Ground",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vampiric_Bite": {
+      "skill_id": 1077,
+      "display_name": "Vampiric Bite",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Distracting_Blow": {
+      "skill_id": 325,
+      "display_name": "Distracting Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Mighty_Blow": {
+      "skill_id": 351,
+      "display_name": "Mighty Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Leviathan_s_Sweep": {
+      "skill_id": 1134,
+      "display_name": "Leviathan's Sweep",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Hunter_s_Shot": {
+      "skill_id": 391,
+      "display_name": "Hunter's Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Quick_Shot": {
+      "skill_id": 397,
+      "display_name": "Quick Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Precision_Shot": {
+      "skill_id": 400,
+      "display_name": "Precision Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Troll_Unguent": {
+      "skill_id": 446,
+      "display_name": "Troll Unguent",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Horns_of_the_Ox": {
+      "skill_id": 777,
+      "display_name": "Horns of the Ox",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Fox_Fangs": {
+      "skill_id": 780,
+      "display_name": "Fox Fangs",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shadow_Refuge": {
+      "skill_id": 814,
+      "display_name": "Shadow Refuge",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Scorpion_Wire": {
+      "skill_id": 815,
+      "display_name": "Scorpion Wire",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shadow_Shroud": {
+      "skill_id": 928,
+      "display_name": "Shadow Shroud",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Demonic_Agility": {
+      "skill_id": 1152,
+      "display_name": "Demonic_Agility",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Exhausting_Assault": {
+      "skill_id": 975,
+      "display_name": "Exhausting Assault",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Leaping_Mantis_Sting": {
+      "skill_id": 1023,
+      "display_name": "Leaping Mantis Sting",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dark_Apostasy": {
+      "skill_id": 1029,
+      "display_name": "Dark Apostasy",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Well_of_Blood": {
+      "skill_id": 92,
+      "display_name": "Well of Blood",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Unholy_Feast": {
+      "skill_id": 110,
+      "display_name": "Unholy Feast",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Chilblains": {
+      "skill_id": 144,
+      "display_name": "Chilblains",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Plague_Touch": {
+      "skill_id": 154,
+      "display_name": "Plague Touch",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Cultist_s_Fervor": {
+      "skill_id": 806,
+      "display_name": "Cultist's Fervor",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vengeful_Was_Khanhei": {
+      "skill_id": 790,
+      "display_name": "Vengeful Was Khanhei",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Wailing_Weapon": {
+      "skill_id": 794,
+      "display_name": "Wailing Weapon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Nightmare_Weapon": {
+      "skill_id": 795,
+      "display_name": "Nightmare Weapon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Seeking_Blade": {
+      "skill_id": 386,
+      "display_name": "Seeking Blade",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dragon_Slash": {
+      "skill_id": 907,
+      "display_name": "Dragon Slash",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Signet_of_Strength": {
+      "skill_id": 944,
+      "display_name": "Signet of Strength",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Jaizhenju_Strike": {
+      "skill_id": 1135,
+      "display_name": "Jaizhenju Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Concussion_Shot": {
+      "skill_id": 408,
+      "display_name": "Concussion Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Seeking_Arrows": {
+      "skill_id": 893,
+      "display_name": "Seeking Arrows",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Sundering_Attack": {
+      "skill_id": 1191,
+      "display_name": "Sundering Attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Grasping_Was_Kuurong": {
+      "skill_id": 789,
+      "display_name": "Grasping Was Kuurong",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Draw_Spirit": {
+      "skill_id": 1224,
+      "display_name": "Draw Spirit",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shadowsong_attack": {
+      "skill_id": 872,
+      "display_name": "Shadowsong_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Pain_attack": {
+      "skill_id": 1248,
+      "display_name": "Pain_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Disenchantment_attack": {
+      "skill_id": 924,
+      "display_name": "Disenchantment_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Painful_Bond": {
+      "skill_id": 1237,
+      "display_name": "Painful Bond",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Attuned_Was_Songkai": {
+      "skill_id": 1220,
+      "display_name": "Attuned Was Songkai",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Fragility": {
+      "skill_id": 19,
+      "display_name": "Fragility",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Crippling_Anguish": {
+      "skill_id": 54,
+      "display_name": "Crippling Anguish",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Conjure_Nightmare": {
+      "skill_id": 859,
+      "display_name": "Conjure Nightmare",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Accumulated_Pain": {
+      "skill_id": 1052,
+      "display_name": "Accumulated Pain",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Twisting_Fangs": {
+      "skill_id": 776,
+      "display_name": "Twisting Fangs",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Jungle_Strike": {
+      "skill_id": 1021,
+      "display_name": "Jungle Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Locust_s_Fury": {
+      "skill_id": 1030,
+      "display_name": "Locust's Fury",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Icy_Prism": {
+      "skill_id": 903,
+      "display_name": "Icy Prism",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Teinai_s_Crystals": {
+      "skill_id": 1099,
+      "display_name": "Teinai's Crystals",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Healing_Breeze": {
+      "skill_id": 288,
+      "display_name": "Healing Breeze",
+      "categories": [
+        "heal"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Signet_of_Rejuvenation": {
+      "skill_id": 887,
+      "display_name": "Signet of Rejuvenation",
+      "categories": [
+        "heal"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Healing_Whisper": {
+      "skill_id": 958,
+      "display_name": "Healing Whisper",
+      "categories": [
+        "heal"
+      ],
+      "threat": 82,
+      "interrupt_priority": 82,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Empathic_Removal": {
+      "skill_id": 1126,
+      "display_name": "Empathic Removal",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Defile_Flesh": {
+      "skill_id": 129,
+      "display_name": "Defile Flesh",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Animate_Vampiric_Horror": {
+      "skill_id": 805,
+      "display_name": "Animate Vampiric Horror",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Taste_of_Pain": {
+      "skill_id": 1069,
+      "display_name": "Taste of Pain",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Blessing_of_the_Kirin": {
+      "skill_id": 1153,
+      "display_name": "Blessing_of_the_Kirin",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Water_Attunement": {
+      "skill_id": 208,
+      "display_name": "Water Attunement",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Blurred_Vision": {
+      "skill_id": 235,
+      "display_name": "Blurred Vision",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Arc_Lightning": {
+      "skill_id": 842,
+      "display_name": "Arc Lightning",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Wild_Blow": {
+      "skill_id": 321,
+      "display_name": "Wild Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Bull_s_Strike": {
+      "skill_id": 332,
+      "display_name": "Bull's Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Swift_Chop": {
+      "skill_id": 341,
+      "display_name": "Swift Chop",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lacerating_Chop": {
+      "skill_id": 849,
+      "display_name": "Lacerating Chop",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shatter_Hex": {
+      "skill_id": 67,
+      "display_name": "Shatter Hex",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Glyph_of_Lesser_Energy": {
+      "skill_id": 200,
+      "display_name": "Glyph of Lesser Energy",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Devastating_Hammer": {
+      "skill_id": 355,
+      "display_name": "Devastating Hammer",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Barbed_Trap": {
+      "skill_id": 458,
+      "display_name": "Barbed Trap",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Brambles": {
+      "skill_id": 947,
+      "display_name": "Brambles",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lacerate": {
+      "skill_id": 961,
+      "display_name": "Lacerate",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Splinter_Weapon": {
+      "skill_id": 792,
+      "display_name": "Splinter Weapon",
+      "categories": [
+        "observed_factions",
+        "packet_pressure"
+      ],
+      "threat": 0,
+      "interrupt_priority": 98,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dissonance_attack": {
+      "skill_id": 922,
+      "display_name": "Dissonance_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Bloodsong_attack": {
+      "skill_id": 1254,
+      "display_name": "Bloodsong_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Drain_Enchantment": {
+      "skill_id": 68,
+      "display_name": "Drain Enchantment",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Stolen_Speed": {
+      "skill_id": 880,
+      "display_name": "Stolen Speed",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Images_of_Remorse": {
+      "skill_id": 899,
+      "display_name": "Images of Remorse",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Kitah_s_Burden": {
+      "skill_id": 1056,
+      "display_name": "Kitah's Burden",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shadow_Form": {
+      "skill_id": 826,
+      "display_name": "Shadow Form",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Jaundiced_Gaze": {
+      "skill_id": 763,
+      "display_name": "Jaundiced Gaze",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vile_Miasma": {
+      "skill_id": 828,
+      "display_name": "Vile Miasma",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Order_of_Apostasy": {
+      "skill_id": 863,
+      "display_name": "Order of Apostasy",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Bitter_Chill": {
+      "skill_id": 1068,
+      "display_name": "Bitter Chill",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Air_Attunement": {
+      "skill_id": 225,
+      "display_name": "Air Attunement",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lightning_Orb": {
+      "skill_id": 229,
+      "display_name": "Lightning Orb",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Auspicious_Blow": {
+      "skill_id": 905,
+      "display_name": "Auspicious Blow",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Enraged_Smash": {
+      "skill_id": 993,
+      "display_name": "Enraged Smash",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Throw_Dirt": {
+      "skill_id": 424,
+      "display_name": "Throw Dirt",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Kindle_Arrows": {
+      "skill_id": 433,
+      "display_name": "Kindle Arrows",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Marauder_s_Shot": {
+      "skill_id": 908,
+      "display_name": "Marauder's Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Life": {
+      "skill_id": 1251,
+      "display_name": "Life",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Weapon_of_Quickening": {
+      "skill_id": 1268,
+      "display_name": "Weapon of Quickening",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Explosive_Growth": {
+      "skill_id": 1229,
+      "display_name": "Explosive Growth",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Boon_of_Creation": {
+      "skill_id": 1230,
+      "display_name": "Boon of Creation",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spirit_Channeling": {
+      "skill_id": 1231,
+      "display_name": "Spirit Channeling",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Unsuspecting_Strike": {
+      "skill_id": 783,
+      "display_name": "Unsuspecting Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Blinding_Powder": {
+      "skill_id": 973,
+      "display_name": "Blinding Powder",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Soul_Feast": {
+      "skill_id": 96,
+      "display_name": "Soul Feast",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Death_Nova": {
+      "skill_id": 104,
+      "display_name": "Death Nova",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Blood_is_Power": {
+      "skill_id": 119,
+      "display_name": "Blood is Power",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Barbed_Signet": {
+      "skill_id": 131,
+      "display_name": "Barbed Signet",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Purge_Conditions": {
+      "skill_id": 278,
+      "display_name": "Purge Conditions",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Martyr": {
+      "skill_id": 298,
+      "display_name": "Martyr",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Apply_Poison": {
+      "skill_id": 435,
+      "display_name": "Apply Poison",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spike_Trap": {
+      "skill_id": 461,
+      "display_name": "Spike Trap",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Focused_Shot": {
+      "skill_id": 909,
+      "display_name": "Focused Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Determined_Shot": {
+      "skill_id": 402,
+      "display_name": "Determined Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Choking_Gas": {
+      "skill_id": 434,
+      "display_name": "Choking Gas",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Melandru_s_Shot": {
+      "skill_id": 853,
+      "display_name": "Melandru's Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Needling_Shot": {
+      "skill_id": 1197,
+      "display_name": "Needling Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Aftershock": {
+      "skill_id": 174,
+      "display_name": "Aftershock",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Teinai_s_Wind": {
+      "skill_id": 1081,
+      "display_name": "Teinai's Wind",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Second_Wind": {
+      "skill_id": 1088,
+      "display_name": "Second Wind",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Conjure_Frost": {
+      "skill_id": 207,
+      "display_name": "Conjure Frost",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Ice_Spear": {
+      "skill_id": 214,
+      "display_name": "Ice Spear",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Strength_of_Honor": {
+      "skill_id": 243,
+      "display_name": "Strength of Honor",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Banish": {
+      "skill_id": 252,
+      "display_name": "Banish",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Withdraw_Hexes": {
+      "skill_id": 942,
+      "display_name": "Withdraw Hexes",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Renewing_Smash": {
+      "skill_id": 994,
+      "display_name": "Renewing Smash",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Ghostly_Haste": {
+      "skill_id": 1244,
+      "display_name": "Ghostly Haste",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spirit_Light_Weapon": {
+      "skill_id": 1257,
+      "display_name": "Spirit Light Weapon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Savage_Shot": {
+      "skill_id": 426,
+      "display_name": "Savage Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Archer_s_Signet": {
+      "skill_id": 1200,
+      "display_name": "Archer's Signet",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Aura_of_Displacement": {
+      "skill_id": 771,
+      "display_name": "Aura of Displacement",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Disrupting_Stab": {
+      "skill_id": 1025,
+      "display_name": "Disrupting Stab",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Boon_Signet": {
+      "skill_id": 847,
+      "display_name": "Boon Signet",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Final_Thrust": {
+      "skill_id": 385,
+      "display_name": "Final Thrust",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Savage_Slash": {
+      "skill_id": 390,
+      "display_name": "Savage Slash",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shove": {
+      "skill_id": 1146,
+      "display_name": "Shove",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Splinter_Shot": {
+      "skill_id": 852,
+      "display_name": "Splinter Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Zojun_s_Shot": {
+      "skill_id": 1192,
+      "display_name": "Zojun's Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Glass_Arrows": {
+      "skill_id": 1199,
+      "display_name": "Glass Arrows",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vampiric_Spirit": {
+      "skill_id": 819,
+      "display_name": "Vampiric Spirit",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vampiric_Swarm": {
+      "skill_id": 1075,
+      "display_name": "Vampiric Swarm",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Blood_Drinker": {
+      "skill_id": 1076,
+      "display_name": "Blood Drinker",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Retribution": {
+      "skill_id": 248,
+      "display_name": "Retribution",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Mind_Wrack": {
+      "skill_id": 49,
+      "display_name": "Mind Wrack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Energy_Tap": {
+      "skill_id": 80,
+      "display_name": "Energy Tap",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Rotting_Flesh": {
+      "skill_id": 106,
+      "display_name": "Rotting Flesh",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Life_Siphon": {
+      "skill_id": 109,
+      "display_name": "Life Siphon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Signet_of_Agony": {
+      "skill_id": 145,
+      "display_name": "Signet of Agony",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Fireball": {
+      "skill_id": 186,
+      "display_name": "Fireball",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spirit_Burn": {
+      "skill_id": 919,
+      "display_name": "Spirit Burn",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Earthbind": {
+      "skill_id": 1252,
+      "display_name": "Earthbind",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dancing_Daggers": {
+      "skill_id": 858,
+      "display_name": "Dancing Daggers",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Mantis_Touch": {
+      "skill_id": 974,
+      "display_name": "Mantis Touch",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Dark_Prison": {
+      "skill_id": 1044,
+      "display_name": "Dark Prison",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Pain_attack_Signet_of_Spirits": {
+      "skill_id": 3153,
+      "display_name": "Pain_attack_Signet_of_Spirits",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Pain_attack_Signet_of_Spirits1": {
+      "skill_id": 3154,
+      "display_name": "Pain_attack_Signet_of_Spirits1",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Pain_attack_Signet_of_Spirits2": {
+      "skill_id": 3155,
+      "display_name": "Pain_attack_Signet_of_Spirits2",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Resurrect_monster_skill": {
+      "skill_id": 873,
+      "display_name": "Resurrect_monster_skill",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Spear_of_Light": {
+      "skill_id": 1130,
+      "display_name": "Spear of Light",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Siege_Turtle_Attack_The_Eternal_Grove": {
+      "skill_id": 1186,
+      "display_name": "Siege_Turtle_Attack_The_Eternal_Grove",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Rust": {
+      "skill_id": 204,
+      "display_name": "Rust",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Vapor_Blade": {
+      "skill_id": 866,
+      "display_name": "Vapor Blade",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Heal_as_One": {
+      "skill_id": 1195,
+      "display_name": "Heal as One",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Signet_of_Disruption": {
+      "skill_id": 860,
+      "display_name": "Signet of Disruption",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Power_Return": {
+      "skill_id": 931,
+      "display_name": "Power Return",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Unnatural_Signet": {
+      "skill_id": 934,
+      "display_name": "Unnatural Signet",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Expel_Hexes": {
+      "skill_id": 954,
+      "display_name": "Expel Hexes",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Conjure_Flame": {
+      "skill_id": 182,
+      "display_name": "Conjure Flame",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Double_Dragon": {
+      "skill_id": 1091,
+      "display_name": "Double Dragon",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Cyclone_Axe": {
+      "skill_id": 330,
+      "display_name": "Cyclone Axe",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Furious_Axe": {
+      "skill_id": 904,
+      "display_name": "Furious Axe",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Triple_Chop": {
+      "skill_id": 992,
+      "display_name": "Triple Chop",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Draw_Conditions": {
+      "skill_id": 311,
+      "display_name": "Draw Conditions",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Enervating_Charge": {
+      "skill_id": 224,
+      "display_name": "Enervating Charge",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Burning_Speed": {
+      "skill_id": 823,
+      "display_name": "Burning Speed",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Wastrel_s_Demise": {
+      "skill_id": 1335,
+      "display_name": "Wastrel's Demise",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lion_s_Comfort": {
+      "skill_id": 1407,
+      "display_name": "Lion's Comfort",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Barrage": {
+      "skill_id": 395,
+      "display_name": "Barrage",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Debilitating_Shot": {
+      "skill_id": 406,
+      "display_name": "Debilitating Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Quickening_Zephyr": {
+      "skill_id": 475,
+      "display_name": "Quickening Zephyr",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Iron_Palm": {
+      "skill_id": 786,
+      "display_name": "Iron Palm",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Way_of_the_Empty_Palm": {
+      "skill_id": 987,
+      "display_name": "Way of the Empty Palm",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Well_of_the_Profane": {
+      "skill_id": 94,
+      "display_name": "Well of the Profane",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Suffering": {
+      "skill_id": 108,
+      "display_name": "Suffering",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Lingering_Curse": {
+      "skill_id": 142,
+      "display_name": "Lingering Curse",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Whirling_Axe": {
+      "skill_id": 888,
+      "display_name": "Whirling Axe",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Illusion_of_Pain": {
+      "skill_id": 879,
+      "display_name": "Illusion of Pain",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Golden_Lotus_Strike": {
+      "skill_id": 1026,
+      "display_name": "Golden Lotus Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Death_Blossom": {
+      "skill_id": 775,
+      "display_name": "Death Blossom",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Distracting_Shot": {
+      "skill_id": 399,
+      "display_name": "Distracting Shot",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Equinox": {
+      "skill_id": 1212,
+      "display_name": "Equinox",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Shroud_of_Silence": {
+      "skill_id": 801,
+      "display_name": "Shroud of Silence",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Famine": {
+      "skill_id": 997,
+      "display_name": "Famine",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Comfort_Animal": {
+      "skill_id": 436,
+      "display_name": "Comfort Animal",
+      "categories": [
+        "resurrection"
+      ],
+      "threat": 110,
+      "interrupt_priority": 110,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Tranquil_Was_Tanasen": {
+      "skill_id": 913,
+      "display_name": "Tranquil Was Tanasen",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Channeled_Strike": {
+      "skill_id": 1225,
+      "display_name": "Channeled Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Strip_Enchantment": {
+      "skill_id": 143,
+      "display_name": "Strip Enchantment",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Icy_Veins": {
+      "skill_id": 821,
+      "display_name": "Icy Veins",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Suicide_Energy": {
+      "skill_id": 1309,
+      "display_name": "Suicide_Energy",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Suicide_Health": {
+      "skill_id": 1310,
+      "display_name": "Suicide_Health",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Pin_Down": {
+      "skill_id": 392,
+      "display_name": "Pin Down",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Flame_Trap": {
+      "skill_id": 459,
+      "display_name": "Flame Trap",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Desperate_Strike": {
+      "skill_id": 948,
+      "display_name": "Desperate Strike",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Smoldering_Embers": {
+      "skill_id": 1090,
+      "display_name": "Smoldering Embers",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Breath_of_Fire": {
+      "skill_id": 1094,
+      "display_name": "Breath of Fire",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    },
+    "Wanderlust_attack": {
+      "skill_id": 1256,
+      "display_name": "Wanderlust_attack",
+      "categories": [
+        "observed_factions"
+      ],
+      "threat": 0,
+      "interrupt_priority": 0,
+      "source": "Apo EnemyTracker Factions exact-map observation / existing KeySoJway priority policy"
+    }
+  },
+  "nightfall_knowledge_version": "2.1.0-rc2",
+  "notes": [
+    "skill_id is authoritative when present; Skill.GetID remains fallback",
+    "Nightfall special mechanics are metadata/advisory unless existing combat logic already reacts to the skill",
+    "RC2 bridges verified offline interrupt priorities into DangerousSkillPriorities without lowering existing static scores; uninterruptible skills remain excluded.",
+    "RC4 indexes every skill observed on exact Factions map+model pairs; only existing/high-confidence danger policy receives reserved-interrupt scores.",
+    "Unclassified observed Factions skills are stored with interrupt_priority 0 and therefore cannot create new reserved interrupts."
+  ],
+  "factions_knowledge_version": "2.1.0-rc4"
+}
