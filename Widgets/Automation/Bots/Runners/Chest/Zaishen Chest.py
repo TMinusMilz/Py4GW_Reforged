@@ -128,15 +128,23 @@ def _open_chest(chest_id: int) -> Generator[Any, Any, bool]:
     if not reached_chest or not running:
         return False
 
-    yield from Routines.Yield.Player.InteractAgent(chest_id)
+    try:
+        yield from Routines.Yield.Player.InteractAgent(chest_id)
+    except Exception as exc:
+        # The native interact can report "cannot reach chest or item" even when
+        # the game already queued the interaction; let the key/drop checks below
+        # decide whether the chest really opened.
+        ConsoleLog(MODULE_NAME, f"Chest interact reported an error: {exc}", Console.MessageType.Warning)
     yield from Routines.Yield.wait(500)
     if not running:
         return False
 
     if not _auto_key_listener_active():
         Player.SendDialog(_USE_KEY_DIALOG_ID)
-    for _ in range(30):
+    for _ in range(60):
         if GLOBAL_CACHE.Inventory.GetModelCount(ModelID.Zaishen_Key) < keys_before:
+            return True
+        if _chest_drop_appeared():
             return True
         if not running:
             return False
@@ -144,6 +152,87 @@ def _open_chest(chest_id: int) -> Generator[Any, Any, bool]:
 
     ConsoleLog(MODULE_NAME, "The chest did not consume a key.", Console.MessageType.Warning)
     return False
+
+
+def _chest_drop_appeared() -> bool:
+    """A nearby drop we may take means the chest actually opened."""
+    try:
+        player_agent_id = Player.GetAgentID()
+        nearby_items = AgentArray.Filter.ByDistance(
+            AgentArray.GetItemArray(),
+            Player.GetXY(),
+            Range.Area.value,
+        )
+        for item_id in nearby_items:
+            if Agent.GetItemAgentOwnerID(item_id) in (0, player_agent_id):
+                return True
+    except Exception:
+        pass
+    return False
+
+
+def _collect_drops() -> Generator[Any, Any, bool]:
+    """Pick up the chest drops without aborting the run on unreachable items.
+
+    Walking to a drop's exact coordinates and calling InteractAgent directly
+    fails when the drop landed where the pathfinder only gets within its
+    tolerance (the chest alcove): the native layer rejects the interact with
+    "cannot reach chest or item". Target + InteractTarget lets the game client
+    walk the remaining gap itself, and per-item failures are skipped instead
+    of stopping the whole run.
+    """
+    picked_up: set[int] = set()
+    rounds_without_progress = 0
+
+    for _ in range(2):
+        loot_array = LootFilters().GetLootArray(Range.Area.value)
+        if not loot_array:
+            break
+
+        attempted = False
+        for item_id in loot_array:
+            if not running:
+                return False
+            if item_id in picked_up or item_id not in AgentArray.GetItemArray():
+                continue
+            attempted = True
+
+            try:
+                yield from Routines.Yield.Player.ChangeTarget(item_id)
+                yield from Routines.Yield.wait(250)
+                if Player.GetTargetID() != item_id:
+                    continue
+                yield from Routines.Yield.Player.InteractTarget()
+            except Exception as exc:
+                ConsoleLog(
+                    MODULE_NAME,
+                    f"Skipping item {item_id} after an interact error: {exc}",
+                    Console.MessageType.Warning,
+                )
+                continue
+
+            for _ in range(30):
+                if item_id not in AgentArray.GetItemArray():
+                    picked_up.add(item_id)
+                    break
+                if not running:
+                    return False
+                yield from Routines.Yield.wait(100)
+
+        if not attempted:
+            break
+        if picked_up:
+            rounds_without_progress = 0
+        else:
+            rounds_without_progress += 1
+
+    if rounds_without_progress >= 2:
+        ConsoleLog(
+            MODULE_NAME,
+            "No drops could be picked up; the remaining items were left on the ground.",
+            Console.MessageType.Warning,
+        )
+    return running
 
 
 def _is_low_req_desirable_skin(item_id: int) -> bool:
@@ -346,12 +435,7 @@ def _run() -> Generator[Any, Any, None]:
                 return
 
             status = "Collecting the drops..."
-            loot_array = LootFilters().GetLootArray(Range.Area.value)
-            looted = yield from Routines.Yield.Items.LootItems(loot_array)
-            if not looted:
-                _stop("Stopped: could not collect the drops.")
-                return
-            if not running:
+            if not (yield from _collect_drops()):
                 return
 
             inventory_after = set(GLOBAL_CACHE.Inventory.GetAllInventoryItemIds())
