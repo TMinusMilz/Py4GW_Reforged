@@ -1,5 +1,3 @@
-from turtle import title
-
 from PyParty import Hero
 from Py4GWCoreLib import ImGui, ColorPalette, Color, TITLE_TIERS, TITLE_NAME, GLOBAL_CACHE, TITLE_CATEGORIES, Utils
 from Py4GWCoreLib import Routines, Map
@@ -372,223 +370,212 @@ def draw_window():
     global quest,force_refresh, quest_name, full_quest_requested_list, active_quest
     MIN_WIDTH = 400
     MIN_HEIGHT = 600
-    
+
     if PyImGui.begin(MODULE_NAME):
-        window_size = PyImGui.get_window_size()
-        new_width = max(window_size[0], MIN_WIDTH)
-        new_height = max(window_size[1], MIN_HEIGHT)
+        # End() must run even when the body throws, or the window stack leaks and every
+        # later widget reports "Mismatched Begin/End" for the rest of the frame.
+        try:
+            window_size = PyImGui.get_window_size()
+            new_width = max(window_size[0], MIN_WIDTH)
+            new_height = max(window_size[1], MIN_HEIGHT)
 
-        # only update size if it changed
-        if new_width != window_size[0] or new_height != window_size[1]:
-            PyImGui.set_window_size(new_width, new_height, PyImGui.ImGuiCond.Always)
-
-        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-        ImGui.text("Active Quests:", font_size=18)
-        PyImGui.pop_style_color(1)
-        PyImGui.same_line(0, -1)
-        
-        # if this is the first frame OR we just pressed refresh,
-        # queue the BASIC (name+location) fetch for the whole log ONCE.
-        active_quest = GLOBAL_CACHE.Quest.GetActiveQuest()
-        quest = GLOBAL_CACHE.Quest.GetQuestData(active_quest)
-
-        if active_quest not in full_quest_requested_list or force_refresh:
-        #if quest_requested != active_quest:
-            if force_refresh:
-                GLOBAL_CACHE.Coroutines.append(
-                    _request_names_coroutine(GLOBAL_CACHE.Quest.GetQuestLogIds())
-                )
-            
-            GLOBAL_CACHE.Coroutines.append(_request_quest_data_coroutine(active_quest))
-            force_refresh = False
-
-        # the button returns True only on the frame it's clicked.
-        # assign that result back into force_refresh so next frame we know to run again.
-        if PyImGui.button("Refresh Quest Info"):
-            GLOBAL_CACHE.Quest.RequestQuestInfo(active_quest, update_marker=True)
-            force_refresh = True
-
-        
-        #quest_log = GLOBAL_CACHE.Quest.GetQuestLogIds()
-        #for quest_id in quest_log:
-        #    if (quest_id not in quest_data_cache) or force_refresh:
-        #        quest_data_cache[quest_id] = GLOBAL_CACHE.Quest.GetQuestData(quest_id)
-                
-            
-        if PyImGui.begin_child("QuestTreeChild", (new_width - 20, 250), True, PyImGui.WindowFlags.NoFlag):
-            # Build the grouping structure
-            grouped_quests: Dict[str, List[int]] = {}
-
-            for qid in GLOBAL_CACHE.Quest.GetQuestLogIds():
-                quest_data = GLOBAL_CACHE.Quest.GetQuestData(qid)
-                if not quest_data:
-                    continue
-
-                # Primary quests go into their own group
-                if quest_data.is_primary:
-                    grouped_quests.setdefault("Primary", []).append(qid)
-                else:
-                    # Group by quest location (fallback to "Unknown Location")
-                    location = "Unknown Location"
-                    if GLOBAL_CACHE.Quest.IsQuestLocationReady(qid):
-                        location = GLOBAL_CACHE.Quest.GetQuestLocation(qid)
-                        if location == "Timeout" or not location:
-                            location = "Unknown Location"
-                    grouped_quests.setdefault(location, []).append(qid)
-
-            # --- Order groups ---
-            ordered_groups: list[tuple[str, list[int]]] = []
-            if "Primary" in grouped_quests:
-                ordered_groups.append(("Primary", grouped_quests.pop("Primary")))
-
-            # Sort other groups alphabetically by location name
-            for loc in sorted(grouped_quests.keys(), key=lambda s: s.lower()):
-                ordered_groups.append((loc, grouped_quests[loc]))
-
-            # --- Draw the tree ---
-            for location, quest_ids in ordered_groups:
-                # Sort quest IDs alphabetically by name (fallback to ID if not ready)
-                sorted_qids = sorted(
-                    quest_ids,
-                    key=lambda qid: (
-                        GLOBAL_CACHE.Quest.GetQuestName(qid)
-                        if GLOBAL_CACHE.Quest.IsQuestNameReady(qid)
-                        else str(qid)
-                    ).lower()
-                )
-
-                ImGui.push_font("Regular", 18)
-                PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                opened = PyImGui.tree_node(f"{location} Quests ({len(sorted_qids)})")
-                PyImGui.pop_style_color(1)
-                ImGui.pop_font()
-
-                if opened:
-                    for qid in sorted_qids:
-                        quest_data = GLOBAL_CACHE.Quest.GetQuestData(qid)
-                        quest_name = (
-                            GLOBAL_CACHE.Quest.GetQuestName(qid)
-                            if GLOBAL_CACHE.Quest.IsQuestNameReady(qid)
-                            else f"Quest ID {qid}"
-                        )
-
-                        # --- draw the quest name ---
-                        if qid == active_quest:
-                            PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                        PyImGui.text(f"{quest_name}")
-                        text_size = PyImGui.calc_text_size(quest_name)
-                        text_pos = PyImGui.get_item_rect_min()
-                        total_width = text_size[0]
-                        max_height = text_size[1]
-
-                        # --- draw "(Completed)" next to it if needed ---
-                        if quest_data.is_completed:
-                            PyImGui.same_line(0, 5)
-                            PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                            completed_text = "(Completed)"
-                            PyImGui.text(completed_text)
-                            PyImGui.pop_style_color(1)
-                            total_width += 5 + PyImGui.calc_text_size(completed_text)[0]
-
-                        if qid == active_quest:
-                            PyImGui.pop_style_color(1)
-                        # === highlight active quest ===
-                        if qid == active_quest:
-                            style = PyImGui.StyleConfig()
-                            style.Pull()
-                            padding_x = style.CellPadding[0] if style.CellPadding else 0.0
-                            style.Push()
-
-                            # get full child dimensions
-                            child_pos = PyImGui.get_window_pos()
-                            child_size = PyImGui.get_window_size()
-
-                            # margin in pixels around the text (controls vertical overflow)
-                            v_margin = 3.0  # expand highlight up/down by 3px each side
-
-                            rect_min = (child_pos[0] + padding_x, text_pos[1] - v_margin)
-                            rect_max = (
-                                child_pos[0] + child_size[0] - padding_x,
-                                text_pos[1] + max_height + v_margin
-                            )
-
-                            color = ColorPalette.GetColor("white").copy()
-                            color.a = 50
-                            PyImGui.draw_list_add_rect_filled(
-                                rect_min[0], rect_min[1],
-                                rect_max[0], rect_max[1],
-                                color.to_color(),
-                                3.0, 0  # slight rounding
-                            )
-
-                        # overlay invisible button covering both texts
-                        PyImGui.set_cursor_screen_pos(text_pos)
-                        if PyImGui.invisible_button(f"quest_btn_{qid}", (total_width, max_height)):
-                            GLOBAL_CACHE.Quest.SetActiveQuest(qid)
-                            GLOBAL_CACHE.Quest.RequestQuestInfo(active_quest, update_marker=True)
-                            force_refresh = True
-
-
-
-
-
-                    PyImGui.tree_pop()
-
-
-
-            PyImGui.end_child()
-
-
-            
-        # child region adjusts automatically
-        if PyImGui.begin_child("AccountInfoChild", (new_width - 20, 0), False, PyImGui.WindowFlags.NoFlag):
-            child_width = PyImGui.get_content_region_avail()[0]
-            
-
-            if GLOBAL_CACHE.Quest.IsQuestNameReady(active_quest):
-                quest_name = GLOBAL_CACHE.Quest.GetQuestName(active_quest)
-                PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                ImGui.text(f"{quest_name}", font_size=20)
-                PyImGui.pop_style_color(1)
-            else:
-                PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                ImGui.text(f"Quest Name Not Fetched Yet", font_size=20)
-                PyImGui.pop_style_color(1)
+            # only update size if it changed
+            if new_width != window_size[0] or new_height != window_size[1]:
+                PyImGui.set_window_size(new_width, new_height, PyImGui.ImGuiCond.Always)
 
             PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-            ImGui.text("Quest Summary:", font_size=18)
+            ImGui.text("Active Quests:", font_size=18)
             PyImGui.pop_style_color(1)
-            
-            if GLOBAL_CACHE.Quest.IsQuestObjectivesReady(active_quest):
-                quest_objectives = GLOBAL_CACHE.Quest.GetQuestObjectives(active_quest)
-                
-                render_markup_text(quest_objectives, max_width=child_width)
-                
-            if GLOBAL_CACHE.Quest.IsQuestNPCReady(active_quest):
-                quest_npc = f"{GLOBAL_CACHE.Quest.GetQuestNPC(active_quest)} ({Map.GetMapName(quest.map_from)})"
-                PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
-                PyImGui.text_wrapped(f"{quest_npc}")
-                PyImGui.pop_style_color(1)
-            
-            if GLOBAL_CACHE.Quest.IsQuestDescriptionReady(active_quest):
-                quest_description = GLOBAL_CACHE.Quest.GetQuestDescription(active_quest)
-                render_markup_text(quest_description, max_width=child_width)
+            PyImGui.same_line(0, -1)
 
-            PyImGui.separator()
-            PyImGui.text(f"From: {Map.GetMapName(quest.map_from)}")
-            PyImGui.text(f"To: {Map.GetMapName(quest.map_to)}")
-            PyImGui.text(f"Marker X,Y: ({quest.marker_x}, {quest.marker_y})")
-            PyImGui.text(f"h0024: {quest.h0024}")
-            
-            PyImGui.separator()
-            is_current = "Yes" if quest.is_current_mission_quest else "No"
-            PyImGui.text_colored(f"Is Current Mission Quest: {is_current}", Utils.TrueFalseColor(quest.is_current_mission_quest))
-            is_area_primary = "Yes" if quest.is_area_primary else "No"
-            PyImGui.text_colored(f"Is Area Primary: {is_area_primary}", Utils.TrueFalseColor(quest.is_area_primary))
+            # if this is the first frame OR we just pressed refresh,
+            # queue the BASIC (name+location) fetch for the whole log ONCE.
+            active_quest = GLOBAL_CACHE.Quest.GetActiveQuest()
+            quest = GLOBAL_CACHE.Quest.GetQuestData(active_quest)
 
-                
-            PyImGui.end_child()
-        PyImGui.end()
+            if active_quest not in full_quest_requested_list or force_refresh:
+                if force_refresh:
+                    GLOBAL_CACHE.Coroutines.append(
+                        _request_names_coroutine(GLOBAL_CACHE.Quest.GetQuestLogIds())
+                    )
+
+                GLOBAL_CACHE.Coroutines.append(_request_quest_data_coroutine(active_quest))
+                force_refresh = False
+
+            # the button returns True only on the frame it's clicked.
+            # assign that result back into force_refresh so next frame we know to run again.
+            if PyImGui.button("Refresh Quest Info"):
+                GLOBAL_CACHE.Quest.RequestQuestInfo(active_quest, update_marker=True)
+                force_refresh = True
+
+            if PyImGui.begin_child("QuestTreeChild", (new_width - 20, 250), True, PyImGui.WindowFlags.NoFlag):
+                try:
+                    # Build the grouping structure
+                    grouped_quests: Dict[str, List[int]] = {}
+
+                    for qid in GLOBAL_CACHE.Quest.GetQuestLogIds():
+                        quest_data = GLOBAL_CACHE.Quest.GetQuestData(qid)
+                        if not quest_data:
+                            continue
+
+                        # Primary quests go into their own group
+                        if quest_data.is_primary:
+                            grouped_quests.setdefault("Primary", []).append(qid)
+                        else:
+                            # Group by quest location (fallback to "Unknown Location")
+                            location = "Unknown Location"
+                            if GLOBAL_CACHE.Quest.IsQuestLocationReady(qid):
+                                location = GLOBAL_CACHE.Quest.GetQuestLocation(qid)
+                                if location == "Timeout" or not location:
+                                    location = "Unknown Location"
+                            grouped_quests.setdefault(location, []).append(qid)
+
+                    # --- Order groups ---
+                    ordered_groups: list[tuple[str, list[int]]] = []
+                    if "Primary" in grouped_quests:
+                        ordered_groups.append(("Primary", grouped_quests.pop("Primary")))
+
+                    # Sort other groups alphabetically by location name
+                    for loc in sorted(grouped_quests.keys(), key=lambda s: s.lower()):
+                        ordered_groups.append((loc, grouped_quests[loc]))
+
+                    # --- Draw the tree ---
+                    for location, quest_ids in ordered_groups:
+                        # Sort quest IDs alphabetically by name (fallback to ID if not ready)
+                        sorted_qids = sorted(
+                            quest_ids,
+                            key=lambda qid: (
+                                GLOBAL_CACHE.Quest.GetQuestName(qid)
+                                if GLOBAL_CACHE.Quest.IsQuestNameReady(qid)
+                                else str(qid)
+                            ).lower()
+                        )
+
+                        ImGui.push_font("Regular", 18)
+                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                        opened = PyImGui.tree_node(f"{location} Quests ({len(sorted_qids)})")
+                        PyImGui.pop_style_color(1)
+                        ImGui.pop_font()
+
+                        if opened:
+                            try:
+                                for qid in sorted_qids:
+                                    quest_data = GLOBAL_CACHE.Quest.GetQuestData(qid)
+                                    quest_name = (
+                                        GLOBAL_CACHE.Quest.GetQuestName(qid)
+                                        if GLOBAL_CACHE.Quest.IsQuestNameReady(qid)
+                                        else f"Quest ID {qid}"
+                                    )
+
+                                    # --- draw the quest name ---
+                                    if qid == active_quest:
+                                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                                    PyImGui.text(f"{quest_name}")
+                                    text_size = PyImGui.calc_text_size(quest_name)
+                                    text_pos = PyImGui.get_item_rect_min()
+                                    total_width = text_size[0]
+                                    max_height = text_size[1]
+
+                                    # --- draw "(Completed)" next to it if needed ---
+                                    if quest_data.is_completed:
+                                        PyImGui.same_line(0, 5)
+                                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                                        completed_text = "(Completed)"
+                                        PyImGui.text(completed_text)
+                                        PyImGui.pop_style_color(1)
+                                        total_width += 5 + PyImGui.calc_text_size(completed_text)[0]
+
+                                    if qid == active_quest:
+                                        PyImGui.pop_style_color(1)
+                                    # === highlight active quest ===
+                                    if qid == active_quest:
+                                        style = PyImGui.StyleConfig()
+                                        style.Pull()
+                                        padding_x = style.CellPadding[0] if style.CellPadding else 0.0
+                                        style.Push()
+
+                                        # get full child dimensions
+                                        child_pos = PyImGui.get_window_pos()
+                                        child_size = PyImGui.get_window_size()
+
+                                        # margin in pixels around the text (controls vertical overflow)
+                                        v_margin = 3.0  # expand highlight up/down by 3px each side
+
+                                        rect_min = (child_pos[0] + padding_x, text_pos[1] - v_margin)
+                                        rect_max = (
+                                            child_pos[0] + child_size[0] - padding_x,
+                                            text_pos[1] + max_height + v_margin
+                                        )
+
+                                        color = ColorPalette.GetColor("white").copy()
+                                        color.a = 50
+                                        PyImGui.draw_list_add_rect_filled(
+                                            rect_min[0], rect_min[1],
+                                            rect_max[0], rect_max[1],
+                                            color.to_color(),
+                                            3.0, 0  # slight rounding
+                                        )
+
+                                    # overlay invisible button covering both texts
+                                    PyImGui.set_cursor_screen_pos(text_pos)
+                                    if PyImGui.invisible_button(f"quest_btn_{qid}", (total_width, max_height)):
+                                        GLOBAL_CACHE.Quest.SetActiveQuest(qid)
+                                        GLOBAL_CACHE.Quest.RequestQuestInfo(active_quest, update_marker=True)
+                                        force_refresh = True
+                            finally:
+                                PyImGui.tree_pop()
+                finally:
+                    PyImGui.end_child()
+
+            # child region adjusts automatically
+            if PyImGui.begin_child("AccountInfoChild", (new_width - 20, 0), False, PyImGui.WindowFlags.NoFlag):
+                try:
+                    child_width = PyImGui.get_content_region_avail()[0]
+
+                    if GLOBAL_CACHE.Quest.IsQuestNameReady(active_quest):
+                        quest_name = GLOBAL_CACHE.Quest.GetQuestName(active_quest)
+                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                        ImGui.text(f"{quest_name}", font_size=20)
+                        PyImGui.pop_style_color(1)
+                    else:
+                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                        ImGui.text(f"Quest Name Not Fetched Yet", font_size=20)
+                        PyImGui.pop_style_color(1)
+
+                    PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                    ImGui.text("Quest Summary:", font_size=18)
+                    PyImGui.pop_style_color(1)
+
+                    if GLOBAL_CACHE.Quest.IsQuestObjectivesReady(active_quest):
+                        quest_objectives = GLOBAL_CACHE.Quest.GetQuestObjectives(active_quest)
+                        render_markup_text(quest_objectives, max_width=child_width)
+
+                    if quest and GLOBAL_CACHE.Quest.IsQuestNPCReady(active_quest):
+                        quest_npc = f"{GLOBAL_CACHE.Quest.GetQuestNPC(active_quest)} ({Map.GetMapName(quest.map_from)})"
+                        PyImGui.push_style_color(PyImGui.ImGuiCol.Text, COLOR_MAP["Header"])
+                        PyImGui.text_wrapped(f"{quest_npc}")
+                        PyImGui.pop_style_color(1)
+
+                    if quest and GLOBAL_CACHE.Quest.IsQuestDescriptionReady(active_quest):
+                        quest_description = GLOBAL_CACHE.Quest.GetQuestDescription(active_quest)
+                        render_markup_text(quest_description, max_width=child_width)
+
+                    if quest:
+                        PyImGui.separator()
+                        PyImGui.text(f"From: {Map.GetMapName(quest.map_from)}")
+                        PyImGui.text(f"To: {Map.GetMapName(quest.map_to)}")
+                        PyImGui.text(f"Marker X,Y: ({quest.marker_x}, {quest.marker_y})")
+                        PyImGui.text(f"h0024: {quest.h0024}")
+
+                        PyImGui.separator()
+                        is_current = "Yes" if quest.is_current_mission_quest else "No"
+                        PyImGui.text_colored(f"Is Current Mission Quest: {is_current}", Utils.TrueFalseColor(quest.is_current_mission_quest))
+                        is_area_primary = "Yes" if quest.is_area_primary else "No"
+                        PyImGui.text_colored(f"Is Area Primary: {is_area_primary}", Utils.TrueFalseColor(quest.is_area_primary))
+                finally:
+                    PyImGui.end_child()
+        finally:
+            PyImGui.end()
 
 
 def main():

@@ -1,5 +1,3 @@
-from turtle import title
-
 from Py4GWCoreLib import Map, Agent, Player, GLOBAL_CACHE, Color, ImGui
 from Py4GWCoreLib import ProfessionShort, Campaign, Routines, Utils
 from Py4GWCoreLib.native_src.context.WorldContext import AttributeStruct
@@ -351,52 +349,52 @@ class AccountInfo:
         def draw_content(self):
             PyImGui.text(f"Account Name: {self.account_name}")
             PyImGui.text(f"Account Email: {self.account_email}")
-            
+
             PyImGui.text("Available Characters:")
 
             if PyImGui.begin_table("##char_table", 6, PyImGui.TableFlags.Borders | PyImGui.TableFlags.RowBg):
-                # Headers
-                table_flags = PyImGui.TableFlags.NoFlag
-                PyImGui.table_setup_column("Lvl",table_flags,  init_width_or_weight=60.0)
-                PyImGui.table_setup_column("Name",table_flags,  init_width_or_weight=300.0)
-                PyImGui.table_setup_column("Map",table_flags,  init_width_or_weight=300.0)
-                PyImGui.table_setup_column("Profs",table_flags,  init_width_or_weight=115.0)
-                PyImGui.table_setup_column("Campaign",table_flags,  init_width_or_weight=230.0)
-                PyImGui.table_setup_column("Type",table_flags,  init_width_or_weight=60.0)
-                
+                try:
+                    # Headers
+                    table_flags = PyImGui.TableFlags.NoFlag
+                    PyImGui.table_setup_column("Lvl",table_flags,  init_width_or_weight=60.0)
+                    PyImGui.table_setup_column("Name",table_flags,  init_width_or_weight=300.0)
+                    PyImGui.table_setup_column("Map",table_flags,  init_width_or_weight=300.0)
+                    PyImGui.table_setup_column("Profs",table_flags,  init_width_or_weight=115.0)
+                    PyImGui.table_setup_column("Campaign",table_flags,  init_width_or_weight=230.0)
+                    PyImGui.table_setup_column("Type",table_flags,  init_width_or_weight=60.0)
 
-                PyImGui.table_headers_row()
+                    PyImGui.table_headers_row()
 
-                # Rows
-                for char in self.available_characters:
-                    PyImGui.table_next_row()
+                    # Rows
+                    for char in self.available_characters:
+                        PyImGui.table_next_row()
 
-                    # Level
-                    PyImGui.table_set_column_index(0)
-                    PyImGui.text(str(char.level))
-                    # Name
-                    PyImGui.table_set_column_index(1)
-                    PyImGui.text(char.player_name)
+                        # Level
+                        PyImGui.table_set_column_index(0)
+                        PyImGui.text(str(char.level))
+                        # Name
+                        PyImGui.table_set_column_index(1)
+                        PyImGui.text(char.player_name)
 
-                    # Map
-                    PyImGui.table_set_column_index(2)
-                    PyImGui.text(Map.GetMapName(char.map_id))
+                        # Map
+                        PyImGui.table_set_column_index(2)
+                        PyImGui.text(Map.GetMapName(char.map_id))
 
-                    # Professions
-                    PyImGui.table_set_column_index(3)
-                    primary = ProfessionShort(char.primary).name
-                    secondary = ProfessionShort(char.secondary).name
-                    PyImGui.text(f"{primary}/{secondary}")
+                        # Professions
+                        PyImGui.table_set_column_index(3)
+                        primary = ProfessionShort(char.primary).name
+                        secondary = ProfessionShort(char.secondary).name
+                        PyImGui.text(f"{primary}/{secondary}")
 
-                    # Campaign
-                    PyImGui.table_set_column_index(4)
-                    PyImGui.text(Campaign(char.campaign).name)
+                        # Campaign
+                        PyImGui.table_set_column_index(4)
+                        PyImGui.text(Campaign(char.campaign).name)
 
-                    # Type
-                    PyImGui.table_set_column_index(5)
-                    PyImGui.text("PvP" if char.is_pvp else "PvE")
-
-                PyImGui.end_table()
+                        # Type
+                        PyImGui.table_set_column_index(5)
+                        PyImGui.text("PvP" if char.is_pvp else "PvE")
+                finally:
+                    PyImGui.end_table()
 
     #region AccountInfo
     def __init__(self):
@@ -426,41 +424,63 @@ class AccountInfo:
 
     def draw_content(self, window_width: float, window_height: float):
         if PyImGui.begin_tab_bar("AccountInfoTabs"):
-            if PyImGui.begin_tab_item("Faction"):
-                if PyImGui.begin_child("FactionsChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
-                    if PyImGui.collapsing_header("Rank Data", PyImGui.TreeNodeFlags.NoFlag):
-                        self.rank_data.draw_content()
-                    self.faction_data.draw_content()
-                    PyImGui.end_child()
-                PyImGui.end_tab_item()
-                
-            if PyImGui.begin_tab_item("Titles"):
-                if PyImGui.begin_child("TitlesChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
-                    self.title_data.draw_content()
-                    PyImGui.end_child()
-                PyImGui.end_tab_item()
-                
-            if PyImGui.begin_tab_item("Account"):
-                if PyImGui.begin_child("AccountChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
-                    self.account_data.draw_content()
-                    PyImGui.end_child()
-                PyImGui.end_tab_item()
-                
-            if PyImGui.begin_tab_item("Quest Log"):
-                if PyImGui.begin_child("QuestLogChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
-                    self.fetch_and_handle_quests = PyImGui.checkbox("Fetch and Handle Quests", self.fetch_and_handle_quests)
-                    if self.fetch_and_handle_quests:
-                        self.quest_data.draw_content(window_width, window_height)
-                    PyImGui.end_child()
-                PyImGui.end_tab_item()
-                
-            if PyImGui.begin_tab_item("Player Data"):
-                if PyImGui.begin_child("PlayerDataChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
-                    self.experience.draw_content()
-                    self.player_data.draw_content()
-                    PyImGui.end_child()
-                PyImGui.end_tab_item()
-            PyImGui.end_tab_bar()
+            try:
+                if PyImGui.begin_tab_item("Faction"):
+                    try:
+                        if PyImGui.begin_child("FactionsChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
+                            try:
+                                if PyImGui.collapsing_header("Rank Data", PyImGui.TreeNodeFlags.NoFlag):
+                                    self.rank_data.draw_content()
+                                self.faction_data.draw_content()
+                            finally:
+                                PyImGui.end_child()
+                    finally:
+                        PyImGui.end_tab_item()
+
+                if PyImGui.begin_tab_item("Titles"):
+                    try:
+                        if PyImGui.begin_child("TitlesChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
+                            try:
+                                self.title_data.draw_content()
+                            finally:
+                                PyImGui.end_child()
+                    finally:
+                        PyImGui.end_tab_item()
+
+                if PyImGui.begin_tab_item("Account"):
+                    try:
+                        if PyImGui.begin_child("AccountChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
+                            try:
+                                self.account_data.draw_content()
+                            finally:
+                                PyImGui.end_child()
+                    finally:
+                        PyImGui.end_tab_item()
+
+                if PyImGui.begin_tab_item("Quest Log"):
+                    try:
+                        if PyImGui.begin_child("QuestLogChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
+                            try:
+                                self.fetch_and_handle_quests = PyImGui.checkbox("Fetch and Handle Quests", self.fetch_and_handle_quests)
+                                if self.fetch_and_handle_quests:
+                                    self.quest_data.draw_content(window_width, window_height)
+                            finally:
+                                PyImGui.end_child()
+                    finally:
+                        PyImGui.end_tab_item()
+
+                if PyImGui.begin_tab_item("Player Data"):
+                    try:
+                        if PyImGui.begin_child("PlayerDataChild", (0, 0), False, PyImGui.WindowFlags.NoFlag):
+                            try:
+                                self.experience.draw_content()
+                                self.player_data.draw_content()
+                            finally:
+                                PyImGui.end_child()
+                    finally:
+                        PyImGui.end_tab_item()
+            finally:
+                PyImGui.end_tab_bar()
 
         
 
@@ -505,19 +525,23 @@ def draw_window(account_info: AccountInfo):
     MIN_HEIGHT = 600
 
     if PyImGui.begin(MODULE_NAME):
-        window_size = PyImGui.get_window_size()
-        new_width = max(window_size[0], MIN_WIDTH)
-        new_height = max(window_size[1], MIN_HEIGHT)
+        try:
+            window_size = PyImGui.get_window_size()
+            new_width = max(window_size[0], MIN_WIDTH)
+            new_height = max(window_size[1], MIN_HEIGHT)
 
-        # only update size if it changed
-        if new_width != window_size[0] or new_height != window_size[1]:
-            PyImGui.set_window_size(new_width, new_height, PyImGui.ImGuiCond.Always)
+            # only update size if it changed
+            if new_width != window_size[0] or new_height != window_size[1]:
+                PyImGui.set_window_size(new_width, new_height, PyImGui.ImGuiCond.Always)
 
-        # child region adjusts automatically
-        if PyImGui.begin_child("AccountInfoChild", (new_width - 20, 0), True, PyImGui.WindowFlags.NoFlag):
-            account_info.draw_content(new_width, new_height)
-            PyImGui.end_child()
-        PyImGui.end()
+            # child region adjusts automatically
+            if PyImGui.begin_child("AccountInfoChild", (new_width - 20, 0), True, PyImGui.WindowFlags.NoFlag):
+                try:
+                    account_info.draw_content(new_width, new_height)
+                finally:
+                    PyImGui.end_child()
+        finally:
+            PyImGui.end()
 
 account_info = AccountInfo()
 def main():

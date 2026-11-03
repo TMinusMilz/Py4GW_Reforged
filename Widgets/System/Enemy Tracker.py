@@ -1,15 +1,13 @@
 import builtins
 import json
 import os
-import tkinter as tk
 from dataclasses import dataclass, field
-from tkinter import filedialog
 from typing import ClassVar
 
 import PyImGui
 import PySystem
 
-from Py4GWCoreLib import Color
+from Py4GWCoreLib import Color, FileDialog
 from Py4GWCoreLib import GLOBAL_CACHE, Py4GW, Range, Map
 from Py4GWCoreLib.Agent import Agent
 from Py4GWCoreLib.AgentArray import AgentArray
@@ -119,6 +117,10 @@ class EnemyTracker:
         self.vars = shared_vars if shared_vars is not None else EnemyTrackerVars()
         if shared_vars is None:
             _set_shared_vars(self.vars)
+        # In-overlay picker (PyImGui.filebrowser wrapper); tkinter is unavailable in the
+        # injected runtime.
+        self.file_dialog = FileDialog()
+        self._dialog_frame = -1
         # Cross-account shared store. Global scope already provides a cross-process
         # lock + per-path journal-merge, so no hand-rolled lock/atomic dance is needed.
         self._data_doc = JsonFactory(EnemyTrackerConfig.DATA_DOC_NAME, "global")
@@ -605,36 +607,34 @@ class EnemyTracker:
         PyImGui.separator()
 
         if PyImGui.button("Import / Merge JSON"):
-            root = tk.Tk()
-            root.withdraw()
-            root.attributes("-topmost", True)
-            try:
-                path = filedialog.askopenfilename(
-                    title="Import Enemy Tracker Data",
-                    initialdir=PySystem.Console.get_projects_path(),
-                    filetypes=[("JSON Files", "*.json"), ("All files", "*.*")],
-                )
-            finally:
-                root.destroy()
-            if path:
-                self.import_bundle_from(path)
+            self.file_dialog.open_open(
+                "Import Enemy Tracker Data",
+                valid_types=".json",
+                start_path=PySystem.Console.get_projects_path(),
+                tag="import",
+            )
 
         PyImGui.same_line(0, 8)
         if PyImGui.button("Export JSON"):
-            root = tk.Tk()
-            root.withdraw()
-            root.attributes("-topmost", True)
-            try:
-                path = filedialog.asksaveasfilename(
-                    title="Export Enemy Tracker Data",
-                    initialdir=PySystem.Console.get_projects_path(),
-                    defaultextension=".json",
-                    filetypes=[("JSON Files", "*.json"), ("All files", "*.*")],
-                )
-            finally:
-                root.destroy()
+            self.file_dialog.open_save(
+                "Export Enemy Tracker Data",
+                valid_types=".json",
+                start_path=PySystem.Console.get_projects_path(),
+                tag="export",
+            )
+
+        # The dialog renders at most once per frame: this function runs from both the
+        # config panel (configure()) and the main window (draw_window()) when both are
+        # visible, and the file browser must not be drawn from two id-stack scopes.
+        frame = PyImGui.get_frame_count()
+        if self._dialog_frame != frame:
+            self._dialog_frame = frame
+            path = self.file_dialog.draw()
             if path:
-                self.export_bundle_to(path)
+                if self.file_dialog.tag == "import":
+                    self.import_bundle_from(path)
+                else:
+                    self.export_bundle_to(path)
 
     def draw_window(self) -> None:
         expanded, open_ = ImGui.BeginWithClose(
@@ -645,13 +645,16 @@ class EnemyTracker:
         )
         self.floating_button.sync_begin_with_close(open_)
 
-        if expanded:
-            PyImGui.text("Enemy Tracker is the scanner and persistence layer.")
-            PyImGui.text("Enemy Party owns the visual enemy UI and interaction layer.")
-            PyImGui.separator()
-            self.draw_scanner_config()
-
-        ImGui.End(EnemyTrackerConfig.MAIN_INI_KEY)
+        # End() must run even when the body throws, or the ImGui window stack leaks and
+        # every later widget reports "Mismatched Begin/End" for the rest of the frame.
+        try:
+            if expanded:
+                PyImGui.text("Enemy Tracker is the scanner and persistence layer.")
+                PyImGui.text("Enemy Party owns the visual enemy UI and interaction layer.")
+                PyImGui.separator()
+                self.draw_scanner_config()
+        finally:
+            ImGui.End(EnemyTrackerConfig.MAIN_INI_KEY)
 
 FloatingButton: EnemyTracker | None = None
 
