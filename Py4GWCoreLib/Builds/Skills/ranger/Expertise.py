@@ -72,3 +72,25 @@ class Expertise:
             log=False,
             aftercast_delay=250,
         ))
+
+    def Experts_Dexterity(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE, Player, Routines
+
+        experts_dexterity_id: int = Skill.GetID("Experts_Dexterity")
+        if not self.build.IsSkillEquipped(experts_dexterity_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if Routines.Checks.Agents.HasEffect(player_agent_id, experts_dexterity_id):
+            remaining_ms = int(GLOBAL_CACHE.Effects.GetEffectTimeRemaining(
+                player_agent_id,
+                experts_dexterity_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=experts_dexterity_id,
+            log=False,
+            aftercast_delay=250,
+        ))

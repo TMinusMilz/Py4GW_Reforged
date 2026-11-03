@@ -588,3 +588,40 @@ class PvE:
             log=False,
             aftercast_delay=250,
         ))
+
+    def Mindbender(self, *, refresh_window_ms: int = 2000) -> BuildCoroutine:
+        from Py4GWCoreLib import GLOBAL_CACHE, Player, Routines
+
+        mindbender_id: int = Skill.GetID("Mindbender")
+        if not self.build.IsSkillEquipped(mindbender_id):
+            return False
+
+        player_agent_id = Player.GetAgentID()
+        if Routines.Checks.Agents.HasEffect(player_agent_id, mindbender_id):
+            remaining_ms = int(GLOBAL_CACHE.Effects.GetEffectTimeRemaining(
+                player_agent_id,
+                mindbender_id,
+            ) or 0)
+            if remaining_ms > refresh_window_ms:
+                return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=mindbender_id,
+            log=False,
+            aftercast_delay=250,
+        ))
+
+    def I_Am_the_Strongest(self) -> BuildCoroutine:
+        from Py4GWCoreLib import Player, Routines
+
+        i_am_the_strongest_id: int = Skill.GetID("I_Am_the_Strongest")
+        if not self.build.IsSkillEquipped(i_am_the_strongest_id):
+            return False
+        if Routines.Checks.Agents.HasEffect(Player.GetAgentID(), i_am_the_strongest_id):
+            return False
+
+        return (yield from self.build.CastSkillID(
+            skill_id=i_am_the_strongest_id,
+            log=False,
+            aftercast_delay=250,
+        ))
