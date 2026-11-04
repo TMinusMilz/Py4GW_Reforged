@@ -40,9 +40,9 @@ class Experts_Dexterity_Bow(BuildMgr):
                 Volley_ID,
                 Sundering_Attack_ID,
                 Penetrating_Attack_ID,
-                I_Am_the_Strongest_ID,
             ],
             optional_skills=[
+                I_Am_the_Strongest_ID,
                 Ebon_Battle_Standard_of_Honor_ID,
                 Mindbender_ID,
                 Way_of_the_Master_ID,
