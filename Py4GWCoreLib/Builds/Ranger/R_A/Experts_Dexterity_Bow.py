@@ -84,9 +84,30 @@ class Experts_Dexterity_Bow(BuildMgr):
                 self._log_diag("BOW_BUILD_TICK", event="blocked_can_cast")
             return False
 
+        # Self buffs are maintained in and out of combat, mirroring the TaO
+        # dagger build: they cast while the player moves/positions, before the
+        # aggro gate below. Each helper only fires when its effect is missing
+        # or about to expire.
         if (yield from self.skills.Any.PvE.Mindbender()):
             self._diag_timer.Reset()
             self._log_diag("BOW_BUILD_TICK", event="cast_mindbender")
+            return True
+
+        if (yield from self.skills.Ranger.Expertise.Experts_Dexterity()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_experts_dexterity")
+            return True
+
+        if (yield from self.skills.Any.PvE.I_Am_the_Strongest()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_i_am_the_strongest")
+            return True
+
+        # The ward's CustomSkill gate (3+ enemies in earshot) still applies
+        # inside CastSkillID, so this stays quiet outside real fights.
+        if (yield from self._cast_ebon_battle_standard_of_honor()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_ebsoh")
             return True
 
         if not (self.IsInAggro() or self.IsCloseToAggro()):
@@ -100,21 +121,9 @@ class Experts_Dexterity_Bow(BuildMgr):
                 )
             return False
 
-        if (yield from self.skills.Ranger.Expertise.Experts_Dexterity()):
-            self._diag_timer.Reset()
-            self._log_diag("BOW_BUILD_TICK", event="cast_experts_dexterity")
-            return True
-
-        if (yield from self.skills.Any.PvE.I_Am_the_Strongest()):
-            self._diag_timer.Reset()
-            self._log_diag("BOW_BUILD_TICK", event="cast_i_am_the_strongest")
-            return True
-
-        if (yield from self._cast_ebon_battle_standard_of_honor()):
-            self._diag_timer.Reset()
-            self._log_diag("BOW_BUILD_TICK", event="cast_ebsoh")
-            return True
-
+        # Chain bow attack skills to exploit their predefined attack speed:
+        # Volley first for balled foes, then the single-target armor-piercing
+        # attacks to keep the attack chain rolling.
         if (yield from self.skills.Ranger.Marksmanship.Volley()):
             self._diag_timer.Reset()
             self._log_diag("BOW_BUILD_TICK", event="cast_volley")
