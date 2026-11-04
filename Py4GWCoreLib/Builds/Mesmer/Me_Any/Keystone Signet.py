@@ -7071,6 +7071,7 @@ class KeystoneSignet(BuildMgr):
         # For surviving high-HP solo targets the normal seed -> gaze -> poison
         # sequence below still runs. Twisted Bark overrides all of this.
         if role == 'condition_seeder' and not self._get_elite_priority_target():
+            split = self._keystone_execute_split_plan()
             finishing = []
             for enemy in targets:
                 try:

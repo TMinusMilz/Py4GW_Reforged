@@ -230,7 +230,6 @@ def _draw_selected_bot(snapshot: WidgetCatalogSnapshot) -> None:
 def _draw_window() -> None:
     PyImGui.set_next_window_size((780.0, 500.0), PyImGui.ImGuiCond.FirstUseEver)
     if not ImGui.Begin(_ini_key, MODULE_NAME):
-        ImGui.End(_ini_key)
         return
 
     snapshot = WidgetCatalog.snapshot_from_handler(_widget_handler)

@@ -18,6 +18,7 @@ from Py4GWCoreLib.Builds.Any.HeroAI import HeroAI as HeroAIBuild
 from Py4GWCoreLib.Builds.Skills import HexRemovalPriority, SkillsTemplate
 from Py4GWCoreLib.Builds.Skills.AoEDangerPrediction import (
     avoid_active_aoe_if_needed,
+    get_game_tick,
     get_player_active_aoe_context,
     is_aoe_escape_safe_hold_active,
     is_position_in_active_aoe,
@@ -2931,12 +2932,10 @@ class Soul_Twisting(BuildMgr):
         This function remains the final action in the ST rotation, so it never
         gets priority over Soul Twisting, spirits, cleanses, support or energy.
         """
-        try:
-            from Py4GWCoreLib import get_game_tick
-            now = int(get_game_tick() or 0)
-        except Exception:
-            now = 0
-        if now > 0 and now - int(self._last_idle_weapon_attack_tick or 0) < 650:
+        now = int(get_game_tick() or 0)
+        if now <= 0:
+            return False
+        if now - int(self._last_idle_weapon_attack_tick or 0) < 650:
             return False
         if not self.IsInAggro():
             return False
