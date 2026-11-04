@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from Py4GWCoreLib import BuildMgr, Profession, Routines
+from Py4GWCoreLib import BuildMgr, Profession, Routines, ThrottledTimer
 from Py4GWCoreLib.BuildMgr import BuildCoroutine
 from Py4GWCoreLib.Builds.Any.HeroAI import HeroAI_Build
 from Py4GWCoreLib.Builds.Skills import SkillsTemplate
@@ -62,45 +62,81 @@ class Experts_Dexterity_Bow(BuildMgr):
         self.SetFallback("HeroAI", HeroAI_Build(standalone_fallback=True))
         self.SetSkillCastingFn(self._run_local_skill_logic)
         self.skills: SkillsTemplate = SkillsTemplate(self)
+        self._diag_timer = ThrottledTimer(2000)
+        self._log_diag(
+            "BOW_BUILD_INSTANTIATED",
+            required=",".join(str(s) for s in self.required_skills),
+            optional=",".join(str(s) for s in self.optional_skills),
+        )
+
+    def _log_diag(self, event: str, **fields: object) -> None:
+        try:
+            from Py4GWCoreLib.Builds.Skills import CombatDebug
+
+            CombatDebug.log_event(event, **fields)
+        except Exception:
+            pass
 
     def _run_local_skill_logic(self) -> BuildCoroutine:
         if not Routines.Checks.Skills.CanCast():
+            if self._diag_timer.IsExpired():
+                self._diag_timer.Reset()
+                self._log_diag("BOW_BUILD_TICK", event="blocked_can_cast")
             return False
 
-        # Mindbender is a mobility buff: keep it up in and out of combat so the
-        # player can reposition between packs without waiting on the combat gate.
         if (yield from self.skills.Any.PvE.Mindbender()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_mindbender")
             return True
 
         if not (self.IsInAggro() or self.IsCloseToAggro()):
+            if self._diag_timer.IsExpired():
+                self._diag_timer.Reset()
+                self._log_diag(
+                    "BOW_BUILD_TICK",
+                    event="no_aggro",
+                    in_aggro=bool(self.IsInAggro()),
+                    close_to_aggro=bool(self.IsCloseToAggro()),
+                )
             return False
 
-        # Expert's Dexterity is the point of the bar: +33% attack speed and
-        # +2 Marksmanship. Refresh it before it falls off.
         if (yield from self.skills.Ranger.Expertise.Experts_Dexterity()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_experts_dexterity")
             return True
 
-        # "I Am the Strongest!" adds +20 damage to the next 8 attacks; the
-        # helper only recasts once the effect has been consumed.
         if (yield from self.skills.Any.PvE.I_Am_the_Strongest()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_i_am_the_strongest")
             return True
 
-        # Ebon Battle Standard of Honor adds +15 damage to non-spirit allies'
-        # attacks while we stand in it. The shared helper's >=2-martial gate
-        # never fires for a solo bow ranger, hence the build-local resolver.
         if (yield from self._cast_ebon_battle_standard_of_honor()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_ebsoh")
             return True
 
-        # Chain bow attack skills to exploit their predefined attack speed:
-        # Volley first for balled foes, then the single-target armor-piercing
-        # attacks to keep the attack chain rolling.
         if (yield from self.skills.Ranger.Marksmanship.Volley()):
-            return True
-        if (yield from self.skills.Ranger.Marksmanship.Penetrating_Attack()):
-            return True
-        if (yield from self.skills.Ranger.Marksmanship.Sundering_Attack()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_volley")
             return True
 
+        if (yield from self.skills.Ranger.Marksmanship.Penetrating_Attack()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_penetrating_attack")
+            return True
+
+        if (yield from self.skills.Ranger.Marksmanship.Sundering_Attack()):
+            self._diag_timer.Reset()
+            self._log_diag("BOW_BUILD_TICK", event="cast_sundering_attack")
+            return True
+
+        if self._diag_timer.IsExpired():
+            self._diag_timer.Reset()
+            self._log_diag(
+                "BOW_BUILD_TICK",
+                event="no_cast_ready",
+                in_aggro=bool(self.IsInAggro()),
+            )
         return False
 
     def _cast_ebon_battle_standard_of_honor(self) -> BuildCoroutine:
